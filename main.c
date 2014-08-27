@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 __code uint16_t __at (_CONFIG1) cfg0 =
- _INTRC_IO &
+ _FOSC_INTOSCIO &
  _CP_OFF &
  _WDT_OFF &
  _BODEN_OFF &
@@ -19,16 +19,16 @@ __code uint16_t __at (_CONFIG1) cfg0 =
 #define BIT_IS_SET(val, bitIndex) ((val) &   (1 << bitIndex) )
 
 /* Port definitions */
-#define LAYER1 RA4
+#define LAYER3 RA4
 #define LAYER2 RA3
-#define LAYER3 RA2
+#define LAYER1 RA2
 
 #define LED1 RB1
 #define LED2 RB0
 #define LED3 RA6
 #define LED4 RB2
-#define LED5 RB6
-#define LED6 RB7
+#define LED5 RB7
+#define LED6 RB6
 #define LED7 RB3
 #define LED8 RB4
 #define LED9 RB5
@@ -45,58 +45,120 @@ void delay_ms(uint16_t ms) {
     while (ms--) {
         /* Inner loop takes about 10 cycles per iteration + 4 cycles setup. */
         for (u = 0; u < LOOPS_PER_MS; u++) {
-            /* Prevent this loop from being optimized away. */
             __asm nop __endasm;
         }
     }
 }
 
-struct frame {
-	unsigned char f1 : 3;
-	unsigned char f2 : 3;
-        unsigned char f3 : 3;
-        unsigned char m1 : 3;
-        unsigned char m2 : 3;
-        unsigned char m3 : 3;
-        unsigned char b1 : 3;
-        unsigned char b2 : 3;
-        unsigned char b3 : 3;
-	unsigned char delay;
+struct layer {
+	uint8_t led1 : 1;
+	uint8_t led2 : 1;
+	uint8_t led3 : 1;
+	uint8_t led4 : 1;
+	uint8_t led5 : 1;
+	uint8_t led6 : 1;
+	uint8_t led7 : 1;
+	uint8_t led8 : 1;
+	uint8_t led9 : 1;
 };
+
+struct frame {
+	struct layer layer1;
+	struct layer layer2;
+	struct layer layer3;
+	uint16_t delay;
+};
+
+#define ALL_ON  {1,1,1,1,1,1,1,1,1}
+#define ALL_OFF {0,0,0, 0,0,0, 0,0,0}
 
 const struct frame pattern[] = {
- { 0b111, 0b000, 0b000, 0b000, 0b000, 0b000, 0b000, 0b000, 0b000, 1000 }, 
- { 0b000, 0b000, 0b000, 0b000, 0b111, 0b000, 0b000, 0b000, 0b000, 1000 }, 
- { 0b000, 0b000, 0b000, 0b000, 0b000, 0b000, 0b000, 0b000, 0b111, 1000 }, 
- { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+ { ALL_ON,	ALL_OFF,	ALL_ON, 	10000 }, 
+ { ALL_OFF,	ALL_ON,		ALL_OFF, 	10000 }, 
+
+ { ALL_ON,	ALL_ON,		ALL_ON, 	100 }, 
+ { ALL_ON,	ALL_ON,		ALL_OFF, 	100 }, 
+ { ALL_ON,	ALL_OFF,	ALL_OFF, 	100 }, 
+ { {0,0,0, 0,0,0, 0,0,0}, {0,0,0, 0,0,0, 0,0,0}, {0,0,0, 0,0,0, 0,0,0}, 0 }, 
 };
 
-void leds_on(unsigned char p, unsigned char layer)
+void leds_on(struct layer *p)
 {
-	LED1 = BIT_IS_SET(pattern[p].f1, layer);
-	LED2 = BIT_IS_SET(pattern[p].f2, layer);
-	LED3 = BIT_IS_SET(pattern[p].f3, layer);
-	LED4 = BIT_IS_SET(pattern[p].m1, layer);
-	LED5 = BIT_IS_SET(pattern[p].m2, layer);
-	LED6 = BIT_IS_SET(pattern[p].m3, layer);
-	LED7 = BIT_IS_SET(pattern[p].b1, layer);
-	LED8 = BIT_IS_SET(pattern[p].b2, layer);
-	LED9 = BIT_IS_SET(pattern[p].b3, layer);
+	LED1 = p->led1;
+	LED2 = p->led2;
+	LED3 = p->led3;
+	LED4 = p->led4;
+	LED5 = p->led5;
+	LED6 = p->led6;
+	LED7 = p->led7;
+	LED8 = p->led8;
+	LED9 = p->led9;
 }
+
+void leds_off(void)
+{
+}
+
 void main(void)
 {
 	unsigned char f = 0;
 	unsigned char l = 0;
+	unsigned int cnt = 0;
+
 	INTCON = 0;
+
+//	TMR0IE = 1;
+//	GIE = 1;
+
+	IRCF0 = 1;
+	IRCF1 = 1;
+	IRCF2 = 1;
+
+	ANSEL = 0;
 	TRISA = 0b00000000;
 	TRISB = 0b00000000;
+
 	for (;;) {
+		do {
 		for (l=0;l<3;l++) {
-			leds_on(f,l);
-			delay_ms( pattern[f].delay );
-		}
+			LED1 = 0;
+			LED2 = 0;
+			LED3 = 0;
+			LED4 = 0;
+			LED5 = 0;
+			LED6 = 0;
+			LED7 = 0;
+			LED8 = 0;
+			LED9 = 0;
+			LAYER1 = 0;
+			LAYER2 = 0;
+			LAYER3 = 0;
+			switch (l) {
+				case 0:
+					LAYER1 = 1;
+					leds_on( &pattern[f].layer1 );
+					break;
+				case 1:
+					LAYER2 = 1;
+					leds_on( &pattern[f].layer2 );
+					break;
+				case 2:
+					LAYER3 = 1;
+					leds_on( &pattern[f].layer3 );
+					break;
+			} // switch
+		} // for layer
+		cnt++;
+		} while (cnt<100000);
+
+		cnt = 0;
+		delay_ms( pattern[f].delay );
+
 		f++;
-		if ( pattern[f].delay==0 ) 
+		if ( pattern[f].delay == 0 )
 			f = 0;
     	}
+
 }
+
+
