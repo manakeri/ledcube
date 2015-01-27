@@ -1,6 +1,6 @@
 gplink-1.3.0 #1017 (Aug  6 2014)
 Copyright (c) 1998-2014 gputils project
-Listing File Generated: 8-15-2014  15:14:12
+Listing File Generated: 9-18-2014  14:33:45
  
  
 Address  Value    Disassembly              Source
@@ -8,7 +8,7 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            ; File Created by SDCC : free open source ANSI-C Compiler
                                            ; Version 3.4.0 #8981 (Aug  6 2014) (Linux)
-                                           ; This file was generated Fri Aug 15 15:14:11 2014
+                                           ; This file was generated Thu Sep 18 14:33:45 2014
                                            ;--------------------------------------------------------
                                            ; PIC port for the 14-bit core
                                            ;--------------------------------------------------------
@@ -26,8 +26,13 @@ Address  Value    Disassembly              Source
                                            
                                                    NOLIST
                                            ;--------------------------------------------------------
+                                           ; config word(s)
+                                           ;--------------------------------------------------------
+002007   3f30     addlw   0x30             	__config _CONFIG1, 0x3f30
+                                           ;--------------------------------------------------------
                                            ; external declarations
                                            ;--------------------------------------------------------
+                                           	extern	__mulint
                                            	extern	_STATUSbits
                                            	extern	_PORTAbits
                                            	extern	_PORTBbits
@@ -109,11 +114,19 @@ Address  Value    Disassembly              Source
                                            	extern	_EEADRH
                                            	extern	_EECON1
                                            	extern	_EECON2
+                                           	extern	___sdcc_saved_fsr
+                                           	extern	__gptrget2
+                                           	extern	__gptrget1
                                            	extern	__sdcc_gsinit_startup
                                            ;--------------------------------------------------------
                                            ; global declarations
                                            ;--------------------------------------------------------
+                                           	global	_timer_isr
                                            	global	_main
+                                           	global	_p1
+                                           	global	_p2
+                                           	global	_p3
+                                           	global	_pattern
                                            
                                            	global PSAVE
                                            	global SSAVE
@@ -159,9 +172,444 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            ; compiler-defined variables
                                            ;--------------------------------------------------------
+                                           UDL_main_0	udata
+                                           r0x1010	res	1
+                                           r0x100F	res	1
+                                           r0x1012	res	1
+                                           r0x1011	res	1
+                                           r0x1013	res	1
+                                           r0x1014	res	1
+                                           r0x1015	res	1
+                                           r0x1016	res	1
+                                           r0x1017	res	1
+                                           r0x1018	res	1
+                                           r0x100D	res	1
+                                           r0x100E	res	1
+                                           _timer_isr_cnt_t0_1_2	res	2
+                                           _timer_isr_frame_1_2	res	2
+                                           _timer_isr_delay_1_2	res	2
                                            ;--------------------------------------------------------
                                            ; initialized data
                                            ;--------------------------------------------------------
+                                           
+                                           ID_main_0	idata
+                                           _p1
+                                           	db	0x00, 0x00
+                                           
+                                           
+                                           ID_main_1	idata
+                                           _p2
+                                           	db	0x00, 0x00
+                                           
+                                           
+                                           ID_main_2	idata
+                                           _p3
+                                           	db	0x00, 0x00
+                                           
+                                           
+                                           ID_main_3	code
+                                           _pattern
+000800   3400     retlw   0                	retlw 0x00
+000801   3400     retlw   0                	retlw 0x00
+000802   3400     retlw   0                	retlw 0x00
+000803   3400     retlw   0                	retlw 0x00
+000804   3400     retlw   0                	retlw 0x00
+000805   3400     retlw   0                	retlw 0x00
+000806   3432     retlw   0x32             	retlw 0x32
+000807   3400     retlw   0                	retlw 0x00
+000808   34ff     retlw   0xff             	retlw 0xff
+000809   3401     retlw   0x1              	retlw 0x01
+00080a   34ff     retlw   0xff             	retlw 0xff
+00080b   3401     retlw   0x1              	retlw 0x01
+00080c   34ff     retlw   0xff             	retlw 0xff
+00080d   3401     retlw   0x1              	retlw 0x01
+00080e   3432     retlw   0x32             	retlw 0x32
+00080f   3400     retlw   0                	retlw 0x00
+000810   3400     retlw   0                	retlw 0x00
+000811   3400     retlw   0                	retlw 0x00
+000812   3400     retlw   0                	retlw 0x00
+000813   3400     retlw   0                	retlw 0x00
+000814   3400     retlw   0                	retlw 0x00
+000815   3400     retlw   0                	retlw 0x00
+000816   3432     retlw   0x32             	retlw 0x32
+000817   3400     retlw   0                	retlw 0x00
+000818   34ff     retlw   0xff             	retlw 0xff
+000819   3401     retlw   0x1              	retlw 0x01
+00081a   34ff     retlw   0xff             	retlw 0xff
+00081b   3401     retlw   0x1              	retlw 0x01
+00081c   34ff     retlw   0xff             	retlw 0xff
+00081d   3401     retlw   0x1              	retlw 0x01
+00081e   3432     retlw   0x32             	retlw 0x32
+00081f   3400     retlw   0                	retlw 0x00
+000820   3400     retlw   0                	retlw 0x00
+000821   3400     retlw   0                	retlw 0x00
+000822   3400     retlw   0                	retlw 0x00
+000823   3400     retlw   0                	retlw 0x00
+000824   3400     retlw   0                	retlw 0x00
+000825   3400     retlw   0                	retlw 0x00
+000826   3432     retlw   0x32             	retlw 0x32
+000827   3400     retlw   0                	retlw 0x00
+000828   34ff     retlw   0xff             	retlw 0xff
+000829   3401     retlw   0x1              	retlw 0x01
+00082a   34ff     retlw   0xff             	retlw 0xff
+00082b   3401     retlw   0x1              	retlw 0x01
+00082c   34ff     retlw   0xff             	retlw 0xff
+00082d   3401     retlw   0x1              	retlw 0x01
+00082e   3432     retlw   0x32             	retlw 0x32
+00082f   3400     retlw   0                	retlw 0x00
+000830   3400     retlw   0                	retlw 0x00
+000831   3400     retlw   0                	retlw 0x00
+000832   3400     retlw   0                	retlw 0x00
+000833   3400     retlw   0                	retlw 0x00
+000834   3400     retlw   0                	retlw 0x00
+000835   3400     retlw   0                	retlw 0x00
+000836   34f4     retlw   0xf4             	retlw 0xf4
+000837   3401     retlw   0x1              	retlw 0x01
+000838   34ff     retlw   0xff             	retlw 0xff
+000839   3401     retlw   0x1              	retlw 0x01
+00083a   34ff     retlw   0xff             	retlw 0xff
+00083b   3401     retlw   0x1              	retlw 0x01
+00083c   34ff     retlw   0xff             	retlw 0xff
+00083d   3401     retlw   0x1              	retlw 0x01
+00083e   34f4     retlw   0xf4             	retlw 0xf4
+00083f   3401     retlw   0x1              	retlw 0x01
+000840   3400     retlw   0                	retlw 0x00
+000841   3400     retlw   0                	retlw 0x00
+000842   3400     retlw   0                	retlw 0x00
+000843   3400     retlw   0                	retlw 0x00
+000844   3400     retlw   0                	retlw 0x00
+000845   3400     retlw   0                	retlw 0x00
+000846   34f4     retlw   0xf4             	retlw 0xf4
+000847   3401     retlw   0x1              	retlw 0x01
+000848   34ff     retlw   0xff             	retlw 0xff
+000849   3401     retlw   0x1              	retlw 0x01
+00084a   34ff     retlw   0xff             	retlw 0xff
+00084b   3401     retlw   0x1              	retlw 0x01
+00084c   34ff     retlw   0xff             	retlw 0xff
+00084d   3401     retlw   0x1              	retlw 0x01
+00084e   34f4     retlw   0xf4             	retlw 0xf4
+00084f   3401     retlw   0x1              	retlw 0x01
+000850   3400     retlw   0                	retlw 0x00
+000851   3400     retlw   0                	retlw 0x00
+000852   3400     retlw   0                	retlw 0x00
+000853   3400     retlw   0                	retlw 0x00
+000854   3400     retlw   0                	retlw 0x00
+000855   3400     retlw   0                	retlw 0x00
+000856   34e8     retlw   0xe8             	retlw 0xe8
+000857   3403     retlw   0x3              	retlw 0x03
+000858   34ff     retlw   0xff             	retlw 0xff
+000859   3401     retlw   0x1              	retlw 0x01
+00085a   34ff     retlw   0xff             	retlw 0xff
+00085b   3401     retlw   0x1              	retlw 0x01
+00085c   34ff     retlw   0xff             	retlw 0xff
+00085d   3401     retlw   0x1              	retlw 0x01
+00085e   34e8     retlw   0xe8             	retlw 0xe8
+00085f   3403     retlw   0x3              	retlw 0x03
+000860   3400     retlw   0                	retlw 0x00
+000861   3400     retlw   0                	retlw 0x00
+000862   3400     retlw   0                	retlw 0x00
+000863   3400     retlw   0                	retlw 0x00
+000864   3400     retlw   0                	retlw 0x00
+000865   3400     retlw   0                	retlw 0x00
+000866   34e8     retlw   0xe8             	retlw 0xe8
+000867   3403     retlw   0x3              	retlw 0x03
+000868   34ff     retlw   0xff             	retlw 0xff
+000869   3401     retlw   0x1              	retlw 0x01
+00086a   34ff     retlw   0xff             	retlw 0xff
+00086b   3401     retlw   0x1              	retlw 0x01
+00086c   34ff     retlw   0xff             	retlw 0xff
+00086d   3401     retlw   0x1              	retlw 0x01
+00086e   34e8     retlw   0xe8             	retlw 0xe8
+00086f   3403     retlw   0x3              	retlw 0x03
+000870   3400     retlw   0                	retlw 0x00
+000871   3400     retlw   0                	retlw 0x00
+000872   3400     retlw   0                	retlw 0x00
+000873   3400     retlw   0                	retlw 0x00
+000874   34ff     retlw   0xff             	retlw 0xff
+000875   3401     retlw   0x1              	retlw 0x01
+000876   34e8     retlw   0xe8             	retlw 0xe8
+000877   3403     retlw   0x3              	retlw 0x03
+000878   3400     retlw   0                	retlw 0x00
+000879   3400     retlw   0                	retlw 0x00
+00087a   34ff     retlw   0xff             	retlw 0xff
+00087b   3401     retlw   0x1              	retlw 0x01
+00087c   34ff     retlw   0xff             	retlw 0xff
+00087d   3401     retlw   0x1              	retlw 0x01
+00087e   34e8     retlw   0xe8             	retlw 0xe8
+00087f   3403     retlw   0x3              	retlw 0x03
+000880   34ff     retlw   0xff             	retlw 0xff
+000881   3401     retlw   0x1              	retlw 0x01
+000882   34ff     retlw   0xff             	retlw 0xff
+000883   3401     retlw   0x1              	retlw 0x01
+000884   34ff     retlw   0xff             	retlw 0xff
+000885   3401     retlw   0x1              	retlw 0x01
+000886   34e8     retlw   0xe8             	retlw 0xe8
+000887   3403     retlw   0x3              	retlw 0x03
+000888   34ff     retlw   0xff             	retlw 0xff
+000889   3401     retlw   0x1              	retlw 0x01
+00088a   34ff     retlw   0xff             	retlw 0xff
+00088b   3401     retlw   0x1              	retlw 0x01
+00088c   34ef     retlw   0xef             	retlw 0xef
+00088d   3401     retlw   0x1              	retlw 0x01
+00088e   3464     retlw   0x64             	retlw 0x64
+00088f   3400     retlw   0                	retlw 0x00
+000890   34ff     retlw   0xff             	retlw 0xff
+000891   3401     retlw   0x1              	retlw 0x01
+000892   34ef     retlw   0xef             	retlw 0xef
+000893   3401     retlw   0x1              	retlw 0x01
+000894   34ef     retlw   0xef             	retlw 0xef
+000895   3401     retlw   0x1              	retlw 0x01
+000896   3464     retlw   0x64             	retlw 0x64
+000897   3400     retlw   0                	retlw 0x00
+000898   34ef     retlw   0xef             	retlw 0xef
+000899   3401     retlw   0x1              	retlw 0x01
+00089a   34ef     retlw   0xef             	retlw 0xef
+00089b   3401     retlw   0x1              	retlw 0x01
+00089c   34ef     retlw   0xef             	retlw 0xef
+00089d   3401     retlw   0x1              	retlw 0x01
+00089e   3464     retlw   0x64             	retlw 0x64
+00089f   3400     retlw   0                	retlw 0x00
+0008a0   34ef     retlw   0xef             	retlw 0xef
+0008a1   3401     retlw   0x1              	retlw 0x01
+0008a2   34ef     retlw   0xef             	retlw 0xef
+0008a3   3401     retlw   0x1              	retlw 0x01
+0008a4   34cf     retlw   0xcf             	retlw 0xcf
+0008a5   3401     retlw   0x1              	retlw 0x01
+0008a6   3464     retlw   0x64             	retlw 0x64
+0008a7   3400     retlw   0                	retlw 0x00
+0008a8   34ef     retlw   0xef             	retlw 0xef
+0008a9   3401     retlw   0x1              	retlw 0x01
+0008aa   34cf     retlw   0xcf             	retlw 0xcf
+0008ab   3401     retlw   0x1              	retlw 0x01
+0008ac   34cf     retlw   0xcf             	retlw 0xcf
+0008ad   3401     retlw   0x1              	retlw 0x01
+0008ae   3464     retlw   0x64             	retlw 0x64
+0008af   3400     retlw   0                	retlw 0x00
+0008b0   34cf     retlw   0xcf             	retlw 0xcf
+0008b1   3401     retlw   0x1              	retlw 0x01
+0008b2   34cf     retlw   0xcf             	retlw 0xcf
+0008b3   3401     retlw   0x1              	retlw 0x01
+0008b4   34cf     retlw   0xcf             	retlw 0xcf
+0008b5   3401     retlw   0x1              	retlw 0x01
+0008b6   3464     retlw   0x64             	retlw 0x64
+0008b7   3400     retlw   0                	retlw 0x00
+0008b8   34cf     retlw   0xcf             	retlw 0xcf
+0008b9   3401     retlw   0x1              	retlw 0x01
+0008ba   34cf     retlw   0xcf             	retlw 0xcf
+0008bb   3401     retlw   0x1              	retlw 0x01
+0008bc   34c7     retlw   0xc7             	retlw 0xc7
+0008bd   3401     retlw   0x1              	retlw 0x01
+0008be   3464     retlw   0x64             	retlw 0x64
+0008bf   3400     retlw   0                	retlw 0x00
+0008c0   34cf     retlw   0xcf             	retlw 0xcf
+0008c1   3401     retlw   0x1              	retlw 0x01
+0008c2   34c7     retlw   0xc7             	retlw 0xc7
+0008c3   3401     retlw   0x1              	retlw 0x01
+0008c4   34c7     retlw   0xc7             	retlw 0xc7
+0008c5   3401     retlw   0x1              	retlw 0x01
+0008c6   3464     retlw   0x64             	retlw 0x64
+0008c7   3400     retlw   0                	retlw 0x00
+0008c8   34c7     retlw   0xc7             	retlw 0xc7
+0008c9   3401     retlw   0x1              	retlw 0x01
+0008ca   34c7     retlw   0xc7             	retlw 0xc7
+0008cb   3401     retlw   0x1              	retlw 0x01
+0008cc   34c7     retlw   0xc7             	retlw 0xc7
+0008cd   3401     retlw   0x1              	retlw 0x01
+0008ce   3464     retlw   0x64             	retlw 0x64
+0008cf   3400     retlw   0                	retlw 0x00
+0008d0   34c7     retlw   0xc7             	retlw 0xc7
+0008d1   3401     retlw   0x1              	retlw 0x01
+0008d2   34c7     retlw   0xc7             	retlw 0xc7
+0008d3   3401     retlw   0x1              	retlw 0x01
+0008d4   3487     retlw   0x87             	retlw 0x87
+0008d5   3401     retlw   0x1              	retlw 0x01
+0008d6   3464     retlw   0x64             	retlw 0x64
+0008d7   3400     retlw   0                	retlw 0x00
+0008d8   34c7     retlw   0xc7             	retlw 0xc7
+0008d9   3401     retlw   0x1              	retlw 0x01
+0008da   3487     retlw   0x87             	retlw 0x87
+0008db   3401     retlw   0x1              	retlw 0x01
+0008dc   3487     retlw   0x87             	retlw 0x87
+0008dd   3401     retlw   0x1              	retlw 0x01
+0008de   3464     retlw   0x64             	retlw 0x64
+0008df   3400     retlw   0                	retlw 0x00
+0008e0   3487     retlw   0x87             	retlw 0x87
+0008e1   3401     retlw   0x1              	retlw 0x01
+0008e2   3487     retlw   0x87             	retlw 0x87
+0008e3   3401     retlw   0x1              	retlw 0x01
+0008e4   3487     retlw   0x87             	retlw 0x87
+0008e5   3401     retlw   0x1              	retlw 0x01
+0008e6   3464     retlw   0x64             	retlw 0x64
+0008e7   3400     retlw   0                	retlw 0x00
+0008e8   3487     retlw   0x87             	retlw 0x87
+0008e9   3401     retlw   0x1              	retlw 0x01
+0008ea   3487     retlw   0x87             	retlw 0x87
+0008eb   3401     retlw   0x1              	retlw 0x01
+0008ec   3483     retlw   0x83             	retlw 0x83
+0008ed   3401     retlw   0x1              	retlw 0x01
+0008ee   3464     retlw   0x64             	retlw 0x64
+0008ef   3400     retlw   0                	retlw 0x00
+0008f0   3487     retlw   0x87             	retlw 0x87
+0008f1   3401     retlw   0x1              	retlw 0x01
+0008f2   3483     retlw   0x83             	retlw 0x83
+0008f3   3401     retlw   0x1              	retlw 0x01
+0008f4   3483     retlw   0x83             	retlw 0x83
+0008f5   3401     retlw   0x1              	retlw 0x01
+0008f6   3464     retlw   0x64             	retlw 0x64
+0008f7   3400     retlw   0                	retlw 0x00
+0008f8   3483     retlw   0x83             	retlw 0x83
+0008f9   3401     retlw   0x1              	retlw 0x01
+0008fa   3483     retlw   0x83             	retlw 0x83
+0008fb   3401     retlw   0x1              	retlw 0x01
+0008fc   3483     retlw   0x83             	retlw 0x83
+0008fd   3401     retlw   0x1              	retlw 0x01
+0008fe   3464     retlw   0x64             	retlw 0x64
+0008ff   3400     retlw   0                	retlw 0x00
+000900   3483     retlw   0x83             	retlw 0x83
+000901   3401     retlw   0x1              	retlw 0x01
+000902   3483     retlw   0x83             	retlw 0x83
+000903   3401     retlw   0x1              	retlw 0x01
+000904   3403     retlw   0x3              	retlw 0x03
+000905   3401     retlw   0x1              	retlw 0x01
+000906   3464     retlw   0x64             	retlw 0x64
+000907   3400     retlw   0                	retlw 0x00
+000908   3483     retlw   0x83             	retlw 0x83
+000909   3401     retlw   0x1              	retlw 0x01
+00090a   3403     retlw   0x3              	retlw 0x03
+00090b   3401     retlw   0x1              	retlw 0x01
+00090c   3403     retlw   0x3              	retlw 0x03
+00090d   3401     retlw   0x1              	retlw 0x01
+00090e   3464     retlw   0x64             	retlw 0x64
+00090f   3400     retlw   0                	retlw 0x00
+000910   3403     retlw   0x3              	retlw 0x03
+000911   3401     retlw   0x1              	retlw 0x01
+000912   3403     retlw   0x3              	retlw 0x03
+000913   3401     retlw   0x1              	retlw 0x01
+000914   3403     retlw   0x3              	retlw 0x03
+000915   3401     retlw   0x1              	retlw 0x01
+000916   3464     retlw   0x64             	retlw 0x64
+000917   3400     retlw   0                	retlw 0x00
+000918   3403     retlw   0x3              	retlw 0x03
+000919   3401     retlw   0x1              	retlw 0x01
+00091a   3403     retlw   0x3              	retlw 0x03
+00091b   3401     retlw   0x1              	retlw 0x01
+00091c   3401     retlw   0x1              	retlw 0x01
+00091d   3401     retlw   0x1              	retlw 0x01
+00091e   3464     retlw   0x64             	retlw 0x64
+00091f   3400     retlw   0                	retlw 0x00
+000920   3403     retlw   0x3              	retlw 0x03
+000921   3401     retlw   0x1              	retlw 0x01
+000922   3401     retlw   0x1              	retlw 0x01
+000923   3401     retlw   0x1              	retlw 0x01
+000924   3401     retlw   0x1              	retlw 0x01
+000925   3401     retlw   0x1              	retlw 0x01
+000926   3464     retlw   0x64             	retlw 0x64
+000927   3400     retlw   0                	retlw 0x00
+000928   3401     retlw   0x1              	retlw 0x01
+000929   3401     retlw   0x1              	retlw 0x01
+00092a   3401     retlw   0x1              	retlw 0x01
+00092b   3401     retlw   0x1              	retlw 0x01
+00092c   3401     retlw   0x1              	retlw 0x01
+00092d   3401     retlw   0x1              	retlw 0x01
+00092e   3464     retlw   0x64             	retlw 0x64
+00092f   3400     retlw   0                	retlw 0x00
+000930   3401     retlw   0x1              	retlw 0x01
+000931   3401     retlw   0x1              	retlw 0x01
+000932   3401     retlw   0x1              	retlw 0x01
+000933   3401     retlw   0x1              	retlw 0x01
+000934   3401     retlw   0x1              	retlw 0x01
+000935   3400     retlw   0                	retlw 0x00
+000936   3464     retlw   0x64             	retlw 0x64
+000937   3400     retlw   0                	retlw 0x00
+000938   3401     retlw   0x1              	retlw 0x01
+000939   3401     retlw   0x1              	retlw 0x01
+00093a   3401     retlw   0x1              	retlw 0x01
+00093b   3400     retlw   0                	retlw 0x00
+00093c   3401     retlw   0x1              	retlw 0x01
+00093d   3400     retlw   0                	retlw 0x00
+00093e   3464     retlw   0x64             	retlw 0x64
+00093f   3400     retlw   0                	retlw 0x00
+000940   3401     retlw   0x1              	retlw 0x01
+000941   3400     retlw   0                	retlw 0x00
+000942   3401     retlw   0x1              	retlw 0x01
+000943   3400     retlw   0                	retlw 0x00
+000944   3401     retlw   0x1              	retlw 0x01
+000945   3400     retlw   0                	retlw 0x00
+000946   34e8     retlw   0xe8             	retlw 0xe8
+000947   3403     retlw   0x3              	retlw 0x03
+000948   3402     retlw   0x2              	retlw 0x02
+000949   3400     retlw   0                	retlw 0x00
+00094a   3402     retlw   0x2              	retlw 0x02
+00094b   3400     retlw   0                	retlw 0x00
+00094c   3402     retlw   0x2              	retlw 0x02
+00094d   3400     retlw   0                	retlw 0x00
+00094e   34f4     retlw   0xf4             	retlw 0xf4
+00094f   3401     retlw   0x1              	retlw 0x01
+000950   3404     retlw   0x4              	retlw 0x04
+000951   3400     retlw   0                	retlw 0x00
+000952   3404     retlw   0x4              	retlw 0x04
+000953   3400     retlw   0                	retlw 0x00
+000954   3404     retlw   0x4              	retlw 0x04
+000955   3400     retlw   0                	retlw 0x00
+000956   34f4     retlw   0xf4             	retlw 0xf4
+000957   3401     retlw   0x1              	retlw 0x01
+000958   3408     retlw   0x8              	retlw 0x08
+000959   3400     retlw   0                	retlw 0x00
+00095a   3408     retlw   0x8              	retlw 0x08
+00095b   3400     retlw   0                	retlw 0x00
+00095c   3408     retlw   0x8              	retlw 0x08
+00095d   3400     retlw   0                	retlw 0x00
+00095e   34f4     retlw   0xf4             	retlw 0xf4
+00095f   3401     retlw   0x1              	retlw 0x01
+000960   3410     retlw   0x10             	retlw 0x10
+000961   3400     retlw   0                	retlw 0x00
+000962   3410     retlw   0x10             	retlw 0x10
+000963   3400     retlw   0                	retlw 0x00
+000964   3410     retlw   0x10             	retlw 0x10
+000965   3400     retlw   0                	retlw 0x00
+000966   34f4     retlw   0xf4             	retlw 0xf4
+000967   3401     retlw   0x1              	retlw 0x01
+000968   3420     retlw   0x20             	retlw 0x20
+000969   3400     retlw   0                	retlw 0x00
+00096a   3420     retlw   0x20             	retlw 0x20
+00096b   3400     retlw   0                	retlw 0x00
+00096c   3420     retlw   0x20             	retlw 0x20
+00096d   3400     retlw   0                	retlw 0x00
+00096e   34f4     retlw   0xf4             	retlw 0xf4
+00096f   3401     retlw   0x1              	retlw 0x01
+000970   3440     retlw   0x40             	retlw 0x40
+000971   3400     retlw   0                	retlw 0x00
+000972   3440     retlw   0x40             	retlw 0x40
+000973   3400     retlw   0                	retlw 0x00
+000974   3440     retlw   0x40             	retlw 0x40
+000975   3400     retlw   0                	retlw 0x00
+000976   34f4     retlw   0xf4             	retlw 0xf4
+000977   3401     retlw   0x1              	retlw 0x01
+000978   3480     retlw   0x80             	retlw 0x80
+000979   3400     retlw   0                	retlw 0x00
+00097a   3480     retlw   0x80             	retlw 0x80
+00097b   3400     retlw   0                	retlw 0x00
+00097c   3480     retlw   0x80             	retlw 0x80
+00097d   3400     retlw   0                	retlw 0x00
+00097e   34f4     retlw   0xf4             	retlw 0xf4
+00097f   3401     retlw   0x1              	retlw 0x01
+000980   3400     retlw   0                	retlw 0x00
+000981   3401     retlw   0x1              	retlw 0x01
+000982   3400     retlw   0                	retlw 0x00
+000983   3401     retlw   0x1              	retlw 0x01
+000984   3400     retlw   0                	retlw 0x00
+000985   3401     retlw   0x1              	retlw 0x01
+000986   34f4     retlw   0xf4             	retlw 0xf4
+000987   3401     retlw   0x1              	retlw 0x01
+000988   3400     retlw   0                	retlw 0x00
+000989   3400     retlw   0                	retlw 0x00
+00098a   3400     retlw   0                	retlw 0x00
+00098b   3400     retlw   0                	retlw 0x00
+00098c   3400     retlw   0                	retlw 0x00
+00098d   3400     retlw   0                	retlw 0x00
+00098e   3400     retlw   0                	retlw 0x00
+00098f   3400     retlw   0                	retlw 0x00
+                                           
                                            ;--------------------------------------------------------
                                            ; overlayable items in internal ram 
                                            ;--------------------------------------------------------
@@ -172,7 +620,1359 @@ Address  Value    Disassembly              Source
                                            STARTUP	code 0x0000
 000000   0000     nop                      	nop
 000001   118a     bcf     0xa, 0x3         	pagesel __sdcc_gsinit_startup
-000002   2803     goto    0x3              	goto	__sdcc_gsinit_startup
+000002   2ee7     goto    0x6e7            	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; interrupt and initialization code
+                                           ;--------------------------------------------------------
+                                           c_interrupt	code	0x4
+                                           __sdcc_interrupt
+                                           ;***
+                                           ;  pBlock Stats: dbName = I
+                                           ;***
+                                           ;entry:  _timer_isr	;Function start
+                                           ; 0 exit points
+                                           ;functions called:
+                                           ;   __mulint
+                                           ;   __gptrget2
+                                           ;   __mulint
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget2
+                                           ;   __mulint
+                                           ;   __gptrget2
+                                           ;   __mulint
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget2
+                                           ;13 compiler assigned registers:
+                                           ;   STK02
+                                           ;   STK01
+                                           ;   STK00
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;   r0x1011
+                                           ;   r0x1012
+                                           ;   r0x1013
+                                           ;   r0x1014
+                                           ;   r0x1015
+                                           ;   r0x1016
+                                           ;   r0x1017
+                                           ;   r0x1018
+                                           ;; Starting pCode block
+                                           _timer_isr	;Function start
+                                           ; 0 exit points
+                                           ;	.line	125; "main.c"	void timer_isr (void) __interrupt(0)
+000004   00f2     movwf   0x72             	MOVWF	WSAVE
+000005   0e03     swapf   0x3, w           	SWAPF	STATUS,W
+000006   0183     clrf    0x3              	CLRF	STATUS
+000007   00f1     movwf   0x71             	MOVWF	SSAVE
+000008   080a     movf    0xa, w           	MOVF	PCLATH,W
+000009   018a     clrf    0xa              	CLRF	PCLATH
+00000a   00f0     movwf   0x70             	MOVWF	PSAVE
+00000b   0804     movf    0x4, w           	MOVF	FSR,W
+00000c   1283     bcf     0x3, 0x5         	BANKSEL	___sdcc_saved_fsr
+00000d   1303     bcf     0x3, 0x6         
+00000e   00cf     movwf   0x4f             	MOVWF	___sdcc_saved_fsr
+                                           ;	.line	131; "main.c"	++cnt_t0;
+00000f   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_cnt_t0_1_2
+000010   1303     bcf     0x3, 0x6         
+000011   0aac     incf    0x2c, f          	INCF	_timer_isr_cnt_t0_1_2,F
+000012   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000013   0aad     incf    0x2d, f          	INCF	(_timer_isr_cnt_t0_1_2 + 1),F
+                                           ;	.line	132; "main.c"	if (cnt_t0 >= delay) {
+000014   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_delay_1_2
+000015   1303     bcf     0x3, 0x6         
+000016   0831     movf    0x31, w          	MOVF	(_timer_isr_delay_1_2 + 1),W
+000017   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_cnt_t0_1_2
+000018   1303     bcf     0x3, 0x6         
+000019   022d     subwf   0x2d, w          	SUBWF	(_timer_isr_cnt_t0_1_2 + 1),W
+00001a   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+00001b   2822     goto    0x22             	GOTO	_00117_DS_
+00001c   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_delay_1_2
+00001d   1303     bcf     0x3, 0x6         
+00001e   0830     movf    0x30, w          	MOVF	_timer_isr_delay_1_2,W
+00001f   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_cnt_t0_1_2
+000020   1303     bcf     0x3, 0x6         
+000021   022c     subwf   0x2c, w          	SUBWF	_timer_isr_cnt_t0_1_2,W
+                                           _00117_DS_
+000022   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000023   2c71     goto    0x471            	GOTO	_00108_DS_
+                                           ;;genSkipc:3247: created from rifx:0x7fff5a8b0dc0
+                                           ;	.line	133; "main.c"	++frame;
+000024   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_frame_1_2
+000025   1303     bcf     0x3, 0x6         
+000026   0aae     incf    0x2e, f          	INCF	_timer_isr_frame_1_2,F
+000027   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000028   0aaf     incf    0x2f, f          	INCF	(_timer_isr_frame_1_2 + 1),F
+                                           ;	.line	134; "main.c"	if (pattern[frame].delay == 0) {
+000029   082e     movf    0x2e, w          	MOVF	_timer_isr_frame_1_2,W
+00002a   00fd     movwf   0x7d             	MOVWF	STK02
+00002b   082f     movf    0x2f, w          	MOVF	(_timer_isr_frame_1_2 + 1),W
+00002c   00fe     movwf   0x7e             	MOVWF	STK01
+00002d   3008     movlw   0x8              	MOVLW	0x08
+00002e   00ff     movwf   0x7f             	MOVWF	STK00
+00002f   3000     movlw   0                	MOVLW	0x00
+000030   118a     bcf     0xa, 0x3         	PAGESEL	__mulint
+000031   2783     call    0x783            	CALL	__mulint
+000032   118a     bcf     0xa, 0x3         	PAGESEL	$
+000033   1283     bcf     0x3, 0x5         	BANKSEL	r0x100F
+000034   1303     bcf     0x3, 0x6         
+000035   00a1     movwf   0x21             	MOVWF	r0x100F
+000036   087f     movf    0x7f, w          	MOVF	STK00,W
+000037   00a0     movwf   0x20             	MOVWF	r0x1010
+000038   3e00     addlw   0                	ADDLW	(_pattern + 0)
+000039   00a0     movwf   0x20             	MOVWF	r0x1010
+00003a   0821     movf    0x21, w          	MOVF	r0x100F,W
+00003b   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00003c   0f21     incfsz  0x21, w          	INCFSZ	r0x100F,W
+00003d   3e08     addlw   0x8              	ADDLW	high (_pattern + 0)
+00003e   00a1     movwf   0x21             	MOVWF	r0x100F
+00003f   3006     movlw   0x6              	MOVLW	0x06
+000040   07a0     addwf   0x20, f          	ADDWF	r0x1010,F
+000041   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000042   0aa1     incf    0x21, f          	INCF	r0x100F,F
+000043   0820     movf    0x20, w          	MOVF	r0x1010,W
+000044   00fe     movwf   0x7e             	MOVWF	STK01
+000045   0821     movf    0x21, w          	MOVF	r0x100F,W
+000046   00ff     movwf   0x7f             	MOVWF	STK00
+000047   3080     movlw   0x80             	MOVLW	0x80
+000048   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget2
+000049   21a3     call    0x1a3            	CALL	__gptrget2
+00004a   118a     bcf     0xa, 0x3         	PAGESEL	$
+00004b   1283     bcf     0x3, 0x5         	BANKSEL	r0x1011
+00004c   1303     bcf     0x3, 0x6         
+00004d   00a3     movwf   0x23             	MOVWF	r0x1011
+00004e   087f     movf    0x7f, w          	MOVF	STK00,W
+00004f   00a2     movwf   0x22             	MOVWF	r0x1012
+000050   0423     iorwf   0x23, w          	IORWF	r0x1011,W
+000051   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000052   2857     goto    0x57             	GOTO	_00106_DS_
+                                           ;	.line	135; "main.c"	frame = 0;
+000053   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_frame_1_2
+000054   1303     bcf     0x3, 0x6         
+000055   01ae     clrf    0x2e             	CLRF	_timer_isr_frame_1_2
+000056   01af     clrf    0x2f             	CLRF	(_timer_isr_frame_1_2 + 1)
+                                           _00106_DS_
+                                           ;	.line	140; "main.c"	p1 = pattern[frame].layer1.led1 | 
+000057   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_frame_1_2
+000058   1303     bcf     0x3, 0x6         
+000059   082e     movf    0x2e, w          	MOVF	_timer_isr_frame_1_2,W
+00005a   00fd     movwf   0x7d             	MOVWF	STK02
+00005b   082f     movf    0x2f, w          	MOVF	(_timer_isr_frame_1_2 + 1),W
+00005c   00fe     movwf   0x7e             	MOVWF	STK01
+00005d   3008     movlw   0x8              	MOVLW	0x08
+00005e   00ff     movwf   0x7f             	MOVWF	STK00
+00005f   3000     movlw   0                	MOVLW	0x00
+000060   118a     bcf     0xa, 0x3         	PAGESEL	__mulint
+000061   2783     call    0x783            	CALL	__mulint
+000062   118a     bcf     0xa, 0x3         	PAGESEL	$
+000063   1283     bcf     0x3, 0x5         	BANKSEL	r0x100F
+000064   1303     bcf     0x3, 0x6         
+000065   00a1     movwf   0x21             	MOVWF	r0x100F
+000066   087f     movf    0x7f, w          	MOVF	STK00,W
+000067   00a0     movwf   0x20             	MOVWF	r0x1010
+000068   3e00     addlw   0                	ADDLW	(_pattern + 0)
+000069   00a2     movwf   0x22             	MOVWF	r0x1012
+00006a   3008     movlw   0x8              	MOVLW	high (_pattern + 0)
+00006b   00a3     movwf   0x23             	MOVWF	r0x1011
+00006c   0821     movf    0x21, w          	MOVF	r0x100F,W
+00006d   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00006e   0f21     incfsz  0x21, w          	INCFSZ	r0x100F,W
+00006f   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+                                           ;;136	MOVF	r0x1012,W
+000070   0823     movf    0x23, w          	MOVF	r0x1011,W
+000071   00a5     movwf   0x25             	MOVWF	r0x1014
+000072   01a6     clrf    0x26             	CLRF	r0x1015
+                                           ;;135	MOVF	r0x1013,W
+000073   0822     movf    0x22, w          	MOVF	r0x1012,W
+000074   00a4     movwf   0x24             	MOVWF	r0x1013
+000075   00fe     movwf   0x7e             	MOVWF	STK01
+000076   0825     movf    0x25, w          	MOVF	r0x1014,W
+000077   00ff     movwf   0x7f             	MOVWF	STK00
+000078   3080     movlw   0x80             	MOVLW	0x80
+000079   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00007a   2190     call    0x190            	CALL	__gptrget1
+00007b   118a     bcf     0xa, 0x3         	PAGESEL	$
+00007c   3901     andlw   0x1              	ANDLW	0x01
+00007d   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+00007e   2882     goto    0x82             	GOTO	_00055_DS_
+00007f   1283     bcf     0x3, 0x5         	BANKSEL	r0x1015
+000080   1303     bcf     0x3, 0x6         
+000081   0aa6     incf    0x26, f          	INCF	r0x1015,F
+                                           _00055_DS_
+                                           ;	.line	141; "main.c"	pattern[frame].layer1.led2 << 1 | 
+000082   1283     bcf     0x3, 0x5         	BANKSEL	r0x1012
+000083   1303     bcf     0x3, 0x6         
+                                           ;;132	MOVF	r0x1012,W
+000084   0823     movf    0x23, w          	MOVF	r0x1011,W
+000085   00a5     movwf   0x25             	MOVWF	r0x1014
+000086   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;131	MOVF	r0x1013,W
+000087   0822     movf    0x22, w          	MOVF	r0x1012,W
+000088   00a4     movwf   0x24             	MOVWF	r0x1013
+000089   00fe     movwf   0x7e             	MOVWF	STK01
+00008a   0825     movf    0x25, w          	MOVF	r0x1014,W
+00008b   00ff     movwf   0x7f             	MOVWF	STK00
+00008c   3080     movlw   0x80             	MOVLW	0x80
+00008d   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00008e   2190     call    0x190            	CALL	__gptrget1
+00008f   118a     bcf     0xa, 0x3         	PAGESEL	$
+000090   3902     andlw   0x2              	ANDLW	0x02
+000091   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000092   2896     goto    0x96             	GOTO	_00056_DS_
+000093   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+000094   1303     bcf     0x3, 0x6         
+000095   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00056_DS_
+000096   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+000097   1303     bcf     0x3, 0x6         
+000098   0827     movf    0x27, w          	MOVF	r0x1016,W
+000099   00a4     movwf   0x24             	MOVWF	r0x1013
+00009a   01a5     clrf    0x25             	CLRF	r0x1014
+00009b   1003     bcf     0x3, 0           	BCF	STATUS,0
+00009c   0d24     rlf     0x24, w          	RLF	r0x1013,W
+00009d   00a7     movwf   0x27             	MOVWF	r0x1016
+00009e   0d25     rlf     0x25, w          	RLF	r0x1014,W
+00009f   00a9     movwf   0x29             	MOVWF	r0x1018
+0000a0   00a8     movwf   0x28             	MOVWF	r0x1017
+0000a1   0826     movf    0x26, w          	MOVF	r0x1015,W
+0000a2   00a4     movwf   0x24             	MOVWF	r0x1013
+0000a3   0427     iorwf   0x27, w          	IORWF	r0x1016,W
+0000a4   00a6     movwf   0x26             	MOVWF	r0x1015
+                                           ;;139	MOVF	r0x1017,W
+                                           ;;138	IORWF	r0x1014,W
+                                           ;;128	MOVF	r0x1012,W
+                                           ;;134	MOVF	r0x1011,W
+                                           ;	.line	142; "main.c"	pattern[frame].layer1.led3 << 2 |
+0000a5   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;127	MOVF	r0x1013,W
+0000a6   0822     movf    0x22, w          	MOVF	r0x1012,W
+0000a7   00a4     movwf   0x24             	MOVWF	r0x1013
+0000a8   00fe     movwf   0x7e             	MOVWF	STK01
+                                           ;;133	MOVF	r0x1014,W
+0000a9   0823     movf    0x23, w          	MOVF	r0x1011,W
+0000aa   00a5     movwf   0x25             	MOVWF	r0x1014
+0000ab   00ff     movwf   0x7f             	MOVWF	STK00
+0000ac   3080     movlw   0x80             	MOVLW	0x80
+0000ad   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0000ae   2190     call    0x190            	CALL	__gptrget1
+0000af   118a     bcf     0xa, 0x3         	PAGESEL	$
+0000b0   3904     andlw   0x4              	ANDLW	0x04
+0000b1   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0000b2   28b6     goto    0xb6             	GOTO	_00057_DS_
+0000b3   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+0000b4   1303     bcf     0x3, 0x6         
+0000b5   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00057_DS_
+0000b6   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+0000b7   1303     bcf     0x3, 0x6         
+0000b8   0827     movf    0x27, w          	MOVF	r0x1016,W
+0000b9   00a4     movwf   0x24             	MOVWF	r0x1013
+0000ba   01a5     clrf    0x25             	CLRF	r0x1014
+0000bb   1003     bcf     0x3, 0           	BCF	STATUS,0
+0000bc   0d24     rlf     0x24, w          	RLF	r0x1013,W
+0000bd   00a7     movwf   0x27             	MOVWF	r0x1016
+0000be   0d25     rlf     0x25, w          	RLF	r0x1014,W
+0000bf   00a8     movwf   0x28             	MOVWF	r0x1017
+0000c0   1003     bcf     0x3, 0           	BCF	STATUS,0
+0000c1   0da7     rlf     0x27, f          	RLF	r0x1016,F
+0000c2   0da8     rlf     0x28, f          	RLF	r0x1017,F
+0000c3   0827     movf    0x27, w          	MOVF	r0x1016,W
+0000c4   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+0000c5   0828     movf    0x28, w          	MOVF	r0x1017,W
+0000c6   04a9     iorwf   0x29, f          	IORWF	r0x1018,F
+                                           ;;124	MOVF	r0x1012,W
+                                           ;;130	MOVF	r0x1011,W
+                                           ;	.line	143; "main.c"	pattern[frame].layer1.led4 << 3 | 
+0000c7   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;123	MOVF	r0x1013,W
+0000c8   0822     movf    0x22, w          	MOVF	r0x1012,W
+0000c9   00a4     movwf   0x24             	MOVWF	r0x1013
+0000ca   00fe     movwf   0x7e             	MOVWF	STK01
+                                           ;;129	MOVF	r0x1014,W
+0000cb   0823     movf    0x23, w          	MOVF	r0x1011,W
+0000cc   00a5     movwf   0x25             	MOVWF	r0x1014
+0000cd   00ff     movwf   0x7f             	MOVWF	STK00
+0000ce   3080     movlw   0x80             	MOVLW	0x80
+0000cf   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0000d0   2190     call    0x190            	CALL	__gptrget1
+0000d1   118a     bcf     0xa, 0x3         	PAGESEL	$
+0000d2   3908     andlw   0x8              	ANDLW	0x08
+0000d3   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0000d4   28d8     goto    0xd8             	GOTO	_00058_DS_
+0000d5   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+0000d6   1303     bcf     0x3, 0x6         
+0000d7   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00058_DS_
+0000d8   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+0000d9   1303     bcf     0x3, 0x6         
+0000da   0827     movf    0x27, w          	MOVF	r0x1016,W
+0000db   00a4     movwf   0x24             	MOVWF	r0x1013
+0000dc   01a5     clrf    0x25             	CLRF	r0x1014
+0000dd   1003     bcf     0x3, 0           	BCF	STATUS,0
+0000de   0d24     rlf     0x24, w          	RLF	r0x1013,W
+0000df   00a7     movwf   0x27             	MOVWF	r0x1016
+0000e0   0d25     rlf     0x25, w          	RLF	r0x1014,W
+0000e1   00a8     movwf   0x28             	MOVWF	r0x1017
+0000e2   1003     bcf     0x3, 0           	BCF	STATUS,0
+0000e3   0da7     rlf     0x27, f          	RLF	r0x1016,F
+0000e4   0da8     rlf     0x28, f          	RLF	r0x1017,F
+0000e5   1003     bcf     0x3, 0           	BCF	STATUS,0
+0000e6   0da7     rlf     0x27, f          	RLF	r0x1016,F
+0000e7   0da8     rlf     0x28, f          	RLF	r0x1017,F
+0000e8   0827     movf    0x27, w          	MOVF	r0x1016,W
+0000e9   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+0000ea   0828     movf    0x28, w          	MOVF	r0x1017,W
+0000eb   04a9     iorwf   0x29, f          	IORWF	r0x1018,F
+                                           ;;120	MOVF	r0x1012,W
+                                           ;;126	MOVF	r0x1011,W
+                                           ;	.line	144; "main.c"	pattern[frame].layer1.led5 << 4 | 
+0000ec   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;119	MOVF	r0x1013,W
+0000ed   0822     movf    0x22, w          	MOVF	r0x1012,W
+0000ee   00a4     movwf   0x24             	MOVWF	r0x1013
+0000ef   00fe     movwf   0x7e             	MOVWF	STK01
+                                           ;;125	MOVF	r0x1014,W
+0000f0   0823     movf    0x23, w          	MOVF	r0x1011,W
+0000f1   00a5     movwf   0x25             	MOVWF	r0x1014
+0000f2   00ff     movwf   0x7f             	MOVWF	STK00
+0000f3   3080     movlw   0x80             	MOVLW	0x80
+0000f4   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0000f5   2190     call    0x190            	CALL	__gptrget1
+0000f6   118a     bcf     0xa, 0x3         	PAGESEL	$
+0000f7   3910     andlw   0x10             	ANDLW	0x10
+0000f8   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0000f9   28fd     goto    0xfd             	GOTO	_00059_DS_
+0000fa   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+0000fb   1303     bcf     0x3, 0x6         
+0000fc   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00059_DS_
+0000fd   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+0000fe   1303     bcf     0x3, 0x6         
+0000ff   0827     movf    0x27, w          	MOVF	r0x1016,W
+000100   00a4     movwf   0x24             	MOVWF	r0x1013
+000101   01a5     clrf    0x25             	CLRF	r0x1014
+000102   0e25     swapf   0x25, w          	SWAPF	r0x1014,W
+000103   39f0     andlw   0xf0             	ANDLW	0xf0
+000104   00a8     movwf   0x28             	MOVWF	r0x1017
+000105   0e24     swapf   0x24, w          	SWAPF	r0x1013,W
+000106   00a7     movwf   0x27             	MOVWF	r0x1016
+000107   390f     andlw   0xf              	ANDLW	0x0f
+000108   04a8     iorwf   0x28, f          	IORWF	r0x1017,F
+000109   06a7     xorwf   0x27, f          	XORWF	r0x1016,F
+00010a   0827     movf    0x27, w          	MOVF	r0x1016,W
+00010b   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+00010c   0828     movf    0x28, w          	MOVF	r0x1017,W
+00010d   04a9     iorwf   0x29, f          	IORWF	r0x1018,F
+                                           ;;116	MOVF	r0x1012,W
+                                           ;;122	MOVF	r0x1011,W
+                                           ;	.line	145; "main.c"	pattern[frame].layer1.led6 << 5 |
+00010e   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;115	MOVF	r0x1013,W
+00010f   0822     movf    0x22, w          	MOVF	r0x1012,W
+000110   00a4     movwf   0x24             	MOVWF	r0x1013
+000111   00fe     movwf   0x7e             	MOVWF	STK01
+                                           ;;121	MOVF	r0x1014,W
+000112   0823     movf    0x23, w          	MOVF	r0x1011,W
+000113   00a5     movwf   0x25             	MOVWF	r0x1014
+000114   00ff     movwf   0x7f             	MOVWF	STK00
+000115   3080     movlw   0x80             	MOVLW	0x80
+000116   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000117   2190     call    0x190            	CALL	__gptrget1
+000118   118a     bcf     0xa, 0x3         	PAGESEL	$
+000119   3920     andlw   0x20             	ANDLW	0x20
+00011a   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+00011b   291f     goto    0x11f            	GOTO	_00060_DS_
+00011c   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+00011d   1303     bcf     0x3, 0x6         
+00011e   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00060_DS_
+00011f   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+000120   1303     bcf     0x3, 0x6         
+000121   0827     movf    0x27, w          	MOVF	r0x1016,W
+000122   00a4     movwf   0x24             	MOVWF	r0x1013
+000123   01a5     clrf    0x25             	CLRF	r0x1014
+000124   0e25     swapf   0x25, w          	SWAPF	r0x1014,W
+000125   39f0     andlw   0xf0             	ANDLW	0xf0
+000126   00a8     movwf   0x28             	MOVWF	r0x1017
+000127   0e24     swapf   0x24, w          	SWAPF	r0x1013,W
+000128   00a7     movwf   0x27             	MOVWF	r0x1016
+000129   390f     andlw   0xf              	ANDLW	0x0f
+00012a   04a8     iorwf   0x28, f          	IORWF	r0x1017,F
+00012b   06a7     xorwf   0x27, f          	XORWF	r0x1016,F
+00012c   1003     bcf     0x3, 0           	BCF	STATUS,0
+00012d   0da7     rlf     0x27, f          	RLF	r0x1016,F
+00012e   0da8     rlf     0x28, f          	RLF	r0x1017,F
+00012f   0827     movf    0x27, w          	MOVF	r0x1016,W
+000130   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+000131   0828     movf    0x28, w          	MOVF	r0x1017,W
+000132   04a9     iorwf   0x29, f          	IORWF	r0x1018,F
+                                           ;;111	MOVF	r0x1012,W
+                                           ;;118	MOVF	r0x1011,W
+                                           ;	.line	146; "main.c"	pattern[frame].layer1.led7 << 6 | 
+000133   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;110	MOVF	r0x1013,W
+000134   0822     movf    0x22, w          	MOVF	r0x1012,W
+000135   00a4     movwf   0x24             	MOVWF	r0x1013
+000136   00fe     movwf   0x7e             	MOVWF	STK01
+                                           ;;117	MOVF	r0x1014,W
+000137   0823     movf    0x23, w          	MOVF	r0x1011,W
+000138   00a5     movwf   0x25             	MOVWF	r0x1014
+000139   00ff     movwf   0x7f             	MOVWF	STK00
+00013a   3080     movlw   0x80             	MOVLW	0x80
+00013b   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00013c   2190     call    0x190            	CALL	__gptrget1
+00013d   118a     bcf     0xa, 0x3         	PAGESEL	$
+00013e   3940     andlw   0x40             	ANDLW	0x40
+00013f   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000140   2944     goto    0x144            	GOTO	_00061_DS_
+000141   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+000142   1303     bcf     0x3, 0x6         
+000143   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00061_DS_
+000144   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+000145   1303     bcf     0x3, 0x6         
+000146   0827     movf    0x27, w          	MOVF	r0x1016,W
+000147   00a4     movwf   0x24             	MOVWF	r0x1013
+000148   01a5     clrf    0x25             	CLRF	r0x1014
+000149   0e25     swapf   0x25, w          	SWAPF	r0x1014,W
+00014a   39f0     andlw   0xf0             	ANDLW	0xf0
+00014b   00a8     movwf   0x28             	MOVWF	r0x1017
+00014c   0e24     swapf   0x24, w          	SWAPF	r0x1013,W
+00014d   00a7     movwf   0x27             	MOVWF	r0x1016
+00014e   390f     andlw   0xf              	ANDLW	0x0f
+00014f   04a8     iorwf   0x28, f          	IORWF	r0x1017,F
+000150   06a7     xorwf   0x27, f          	XORWF	r0x1016,F
+000151   1003     bcf     0x3, 0           	BCF	STATUS,0
+000152   0da7     rlf     0x27, f          	RLF	r0x1016,F
+000153   0da8     rlf     0x28, f          	RLF	r0x1017,F
+000154   1003     bcf     0x3, 0           	BCF	STATUS,0
+000155   0da7     rlf     0x27, f          	RLF	r0x1016,F
+000156   0da8     rlf     0x28, f          	RLF	r0x1017,F
+000157   0827     movf    0x27, w          	MOVF	r0x1016,W
+000158   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+000159   0828     movf    0x28, w          	MOVF	r0x1017,W
+00015a   04a9     iorwf   0x29, f          	IORWF	r0x1018,F
+                                           ;;103	MOVF	r0x1012,W
+                                           ;;113	MOVF	r0x1011,W
+                                           ;	.line	147; "main.c"	pattern[frame].layer1.led8 << 7 | 
+00015b   01a7     clrf    0x27             	CLRF	r0x1016
+                                           ;;102	MOVF	r0x1013,W
+00015c   0822     movf    0x22, w          	MOVF	r0x1012,W
+00015d   00a4     movwf   0x24             	MOVWF	r0x1013
+00015e   00fe     movwf   0x7e             	MOVWF	STK01
+                                           ;;112	MOVF	r0x1014,W
+00015f   0823     movf    0x23, w          	MOVF	r0x1011,W
+000160   00a5     movwf   0x25             	MOVWF	r0x1014
+000161   00ff     movwf   0x7f             	MOVWF	STK00
+000162   3080     movlw   0x80             	MOVLW	0x80
+000163   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000164   2190     call    0x190            	CALL	__gptrget1
+000165   118a     bcf     0xa, 0x3         	PAGESEL	$
+000166   3980     andlw   0x80             	ANDLW	0x80
+000167   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000168   296c     goto    0x16c            	GOTO	_00062_DS_
+000169   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+00016a   1303     bcf     0x3, 0x6         
+00016b   0aa7     incf    0x27, f          	INCF	r0x1016,F
+                                           _00062_DS_
+00016c   1283     bcf     0x3, 0x5         	BANKSEL	r0x1016
+00016d   1303     bcf     0x3, 0x6         
+00016e   0827     movf    0x27, w          	MOVF	r0x1016,W
+00016f   00a4     movwf   0x24             	MOVWF	r0x1013
+000170   01a5     clrf    0x25             	CLRF	r0x1014
+000171   0c25     rrf     0x25, w          	RRF	r0x1014,W
+000172   0c24     rrf     0x24, w          	RRF	r0x1013,W
+000173   00a8     movwf   0x28             	MOVWF	r0x1017
+000174   01a7     clrf    0x27             	CLRF	r0x1016
+000175   0ca7     rrf     0x27, f          	RRF	r0x1016,F
+000176   0827     movf    0x27, w          	MOVF	r0x1016,W
+000177   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+000178   0828     movf    0x28, w          	MOVF	r0x1017,W
+000179   04a9     iorwf   0x29, f          	IORWF	r0x1018,F
+                                           ;	.line	148; "main.c"	pattern[frame].layer1.led9 << 8;
+00017a   0aa2     incf    0x22, f          	INCF	r0x1012,F
+00017b   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+00017c   0aa3     incf    0x23, f          	INCF	r0x1011,F
+00017d   01a4     clrf    0x24             	CLRF	r0x1013
+00017e   0822     movf    0x22, w          	MOVF	r0x1012,W
+00017f   00fe     movwf   0x7e             	MOVWF	STK01
+000180   0823     movf    0x23, w          	MOVF	r0x1011,W
+000181   00ff     movwf   0x7f             	MOVWF	STK00
+000182   3080     movlw   0x80             	MOVLW	0x80
+000183   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000184   2190     call    0x190            	CALL	__gptrget1
+000185   118a     bcf     0xa, 0x3         	PAGESEL	$
+000186   3901     andlw   0x1              	ANDLW	0x01
+000187   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000188   298c     goto    0x18c            	GOTO	_00063_DS_
+000189   1283     bcf     0x3, 0x5         	BANKSEL	r0x1013
+00018a   1303     bcf     0x3, 0x6         
+00018b   0aa4     incf    0x24, f          	INCF	r0x1013,F
+                                           _00063_DS_
+00018c   1283     bcf     0x3, 0x5         	BANKSEL	r0x1013
+00018d   1303     bcf     0x3, 0x6         
+00018e   0824     movf    0x24, w          	MOVF	r0x1013,W
+00018f   00a2     movwf   0x22             	MOVWF	r0x1012
+000190   01a3     clrf    0x23             	CLRF	r0x1011
+                                           ;;105	MOVF	r0x1012,W
+000191   01a4     clrf    0x24             	CLRF	r0x1013
+000192   0826     movf    0x26, w          	MOVF	r0x1015,W
+000193   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+000194   1303     bcf     0x3, 0x6         
+000195   00c9     movwf   0x49             	MOVWF	_p1
+                                           ;;104	MOVF	r0x1014,W
+000196   1283     bcf     0x3, 0x5         	BANKSEL	r0x1012
+000197   1303     bcf     0x3, 0x6         
+000198   0822     movf    0x22, w          	MOVF	r0x1012,W
+000199   00a5     movwf   0x25             	MOVWF	r0x1014
+00019a   0429     iorwf   0x29, w          	IORWF	r0x1018,W
+00019b   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+00019c   1303     bcf     0x3, 0x6         
+00019d   00ca     movwf   0x4a             	MOVWF	(_p1 + 1)
+                                           ;	.line	151; "main.c"	p2 = pattern[frame].layer2.led1 |
+00019e   1283     bcf     0x3, 0x5         	BANKSEL	r0x1010
+00019f   1303     bcf     0x3, 0x6         
+0001a0   0820     movf    0x20, w          	MOVF	r0x1010,W
+0001a1   3e00     addlw   0                	ADDLW	(_pattern + 0)
+0001a2   00a0     movwf   0x20             	MOVWF	r0x1010
+0001a3   0821     movf    0x21, w          	MOVF	r0x100F,W
+0001a4   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0001a5   0f21     incfsz  0x21, w          	INCFSZ	r0x100F,W
+0001a6   3e08     addlw   0x8              	ADDLW	high (_pattern + 0)
+0001a7   00a1     movwf   0x21             	MOVWF	r0x100F
+0001a8   3002     movlw   0x2              	MOVLW	0x02
+0001a9   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0001aa   00a2     movwf   0x22             	MOVWF	r0x1012
+0001ab   01a3     clrf    0x23             	CLRF	r0x1011
+0001ac   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0001ad   0821     movf    0x21, w          	MOVF	r0x100F,W
+0001ae   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0001af   01a4     clrf    0x24             	CLRF	r0x1013
+0001b0   0822     movf    0x22, w          	MOVF	r0x1012,W
+0001b1   00fe     movwf   0x7e             	MOVWF	STK01
+0001b2   0823     movf    0x23, w          	MOVF	r0x1011,W
+0001b3   00ff     movwf   0x7f             	MOVWF	STK00
+0001b4   3080     movlw   0x80             	MOVLW	0x80
+0001b5   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0001b6   2190     call    0x190            	CALL	__gptrget1
+0001b7   118a     bcf     0xa, 0x3         	PAGESEL	$
+0001b8   3901     andlw   0x1              	ANDLW	0x01
+0001b9   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0001ba   29be     goto    0x1be            	GOTO	_00064_DS_
+0001bb   1283     bcf     0x3, 0x5         	BANKSEL	r0x1013
+0001bc   1303     bcf     0x3, 0x6         
+0001bd   0aa4     incf    0x24, f          	INCF	r0x1013,F
+                                           _00064_DS_
+                                           ;	.line	152; "main.c"	pattern[frame].layer2.led2 << 1 |
+0001be   3002     movlw   0x2              	MOVLW	0x02
+0001bf   1283     bcf     0x3, 0x5         	BANKSEL	r0x1010
+0001c0   1303     bcf     0x3, 0x6         
+0001c1   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0001c2   00a2     movwf   0x22             	MOVWF	r0x1012
+0001c3   01a3     clrf    0x23             	CLRF	r0x1011
+0001c4   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0001c5   0821     movf    0x21, w          	MOVF	r0x100F,W
+0001c6   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0001c7   01a5     clrf    0x25             	CLRF	r0x1014
+0001c8   0822     movf    0x22, w          	MOVF	r0x1012,W
+0001c9   00fe     movwf   0x7e             	MOVWF	STK01
+0001ca   0823     movf    0x23, w          	MOVF	r0x1011,W
+0001cb   00ff     movwf   0x7f             	MOVWF	STK00
+0001cc   3080     movlw   0x80             	MOVLW	0x80
+0001cd   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0001ce   2190     call    0x190            	CALL	__gptrget1
+0001cf   118a     bcf     0xa, 0x3         	PAGESEL	$
+0001d0   3902     andlw   0x2              	ANDLW	0x02
+0001d1   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0001d2   29d6     goto    0x1d6            	GOTO	_00065_DS_
+0001d3   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0001d4   1303     bcf     0x3, 0x6         
+0001d5   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00065_DS_
+0001d6   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0001d7   1303     bcf     0x3, 0x6         
+0001d8   0825     movf    0x25, w          	MOVF	r0x1014,W
+0001d9   00a2     movwf   0x22             	MOVWF	r0x1012
+0001da   01a3     clrf    0x23             	CLRF	r0x1011
+0001db   1003     bcf     0x3, 0           	BCF	STATUS,0
+0001dc   0d22     rlf     0x22, w          	RLF	r0x1012,W
+0001dd   00a5     movwf   0x25             	MOVWF	r0x1014
+0001de   0d23     rlf     0x23, w          	RLF	r0x1011,W
+0001df   00a7     movwf   0x27             	MOVWF	r0x1016
+0001e0   00a6     movwf   0x26             	MOVWF	r0x1015
+0001e1   0824     movf    0x24, w          	MOVF	r0x1013,W
+0001e2   00a2     movwf   0x22             	MOVWF	r0x1012
+0001e3   0425     iorwf   0x25, w          	IORWF	r0x1014,W
+0001e4   00a4     movwf   0x24             	MOVWF	r0x1013
+                                           ;;114	MOVF	r0x1015,W
+                                           ;;109	IORWF	r0x1011,W
+                                           ;	.line	153; "main.c"	pattern[frame].layer2.led3 << 2 |
+0001e5   3002     movlw   0x2              	MOVLW	0x02
+0001e6   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0001e7   00a2     movwf   0x22             	MOVWF	r0x1012
+0001e8   01a3     clrf    0x23             	CLRF	r0x1011
+0001e9   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0001ea   0821     movf    0x21, w          	MOVF	r0x100F,W
+0001eb   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0001ec   01a5     clrf    0x25             	CLRF	r0x1014
+0001ed   0822     movf    0x22, w          	MOVF	r0x1012,W
+0001ee   00fe     movwf   0x7e             	MOVWF	STK01
+0001ef   0823     movf    0x23, w          	MOVF	r0x1011,W
+0001f0   00ff     movwf   0x7f             	MOVWF	STK00
+0001f1   3080     movlw   0x80             	MOVLW	0x80
+0001f2   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0001f3   2190     call    0x190            	CALL	__gptrget1
+0001f4   118a     bcf     0xa, 0x3         	PAGESEL	$
+0001f5   3904     andlw   0x4              	ANDLW	0x04
+0001f6   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0001f7   29fb     goto    0x1fb            	GOTO	_00066_DS_
+0001f8   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0001f9   1303     bcf     0x3, 0x6         
+0001fa   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00066_DS_
+0001fb   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0001fc   1303     bcf     0x3, 0x6         
+0001fd   0825     movf    0x25, w          	MOVF	r0x1014,W
+0001fe   00a2     movwf   0x22             	MOVWF	r0x1012
+0001ff   01a3     clrf    0x23             	CLRF	r0x1011
+000200   1003     bcf     0x3, 0           	BCF	STATUS,0
+000201   0d22     rlf     0x22, w          	RLF	r0x1012,W
+000202   00a5     movwf   0x25             	MOVWF	r0x1014
+000203   0d23     rlf     0x23, w          	RLF	r0x1011,W
+000204   00a6     movwf   0x26             	MOVWF	r0x1015
+000205   1003     bcf     0x3, 0           	BCF	STATUS,0
+000206   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000207   0da6     rlf     0x26, f          	RLF	r0x1015,F
+000208   0825     movf    0x25, w          	MOVF	r0x1014,W
+000209   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+00020a   0826     movf    0x26, w          	MOVF	r0x1015,W
+00020b   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	154; "main.c"	pattern[frame].layer2.led4 << 3 |
+00020c   3002     movlw   0x2              	MOVLW	0x02
+00020d   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+00020e   00a2     movwf   0x22             	MOVWF	r0x1012
+00020f   01a3     clrf    0x23             	CLRF	r0x1011
+000210   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000211   0821     movf    0x21, w          	MOVF	r0x100F,W
+000212   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000213   01a5     clrf    0x25             	CLRF	r0x1014
+000214   0822     movf    0x22, w          	MOVF	r0x1012,W
+000215   00fe     movwf   0x7e             	MOVWF	STK01
+000216   0823     movf    0x23, w          	MOVF	r0x1011,W
+000217   00ff     movwf   0x7f             	MOVWF	STK00
+000218   3080     movlw   0x80             	MOVLW	0x80
+000219   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00021a   2190     call    0x190            	CALL	__gptrget1
+00021b   118a     bcf     0xa, 0x3         	PAGESEL	$
+00021c   3908     andlw   0x8              	ANDLW	0x08
+00021d   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+00021e   2a22     goto    0x222            	GOTO	_00067_DS_
+00021f   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000220   1303     bcf     0x3, 0x6         
+000221   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00067_DS_
+000222   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000223   1303     bcf     0x3, 0x6         
+000224   0825     movf    0x25, w          	MOVF	r0x1014,W
+000225   00a2     movwf   0x22             	MOVWF	r0x1012
+000226   01a3     clrf    0x23             	CLRF	r0x1011
+000227   1003     bcf     0x3, 0           	BCF	STATUS,0
+000228   0d22     rlf     0x22, w          	RLF	r0x1012,W
+000229   00a5     movwf   0x25             	MOVWF	r0x1014
+00022a   0d23     rlf     0x23, w          	RLF	r0x1011,W
+00022b   00a6     movwf   0x26             	MOVWF	r0x1015
+00022c   1003     bcf     0x3, 0           	BCF	STATUS,0
+00022d   0da5     rlf     0x25, f          	RLF	r0x1014,F
+00022e   0da6     rlf     0x26, f          	RLF	r0x1015,F
+00022f   1003     bcf     0x3, 0           	BCF	STATUS,0
+000230   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000231   0da6     rlf     0x26, f          	RLF	r0x1015,F
+000232   0825     movf    0x25, w          	MOVF	r0x1014,W
+000233   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+000234   0826     movf    0x26, w          	MOVF	r0x1015,W
+000235   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	155; "main.c"	pattern[frame].layer2.led5 << 4 |
+000236   3002     movlw   0x2              	MOVLW	0x02
+000237   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000238   00a2     movwf   0x22             	MOVWF	r0x1012
+000239   01a3     clrf    0x23             	CLRF	r0x1011
+00023a   0da3     rlf     0x23, f          	RLF	r0x1011,F
+00023b   0821     movf    0x21, w          	MOVF	r0x100F,W
+00023c   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+00023d   01a5     clrf    0x25             	CLRF	r0x1014
+00023e   0822     movf    0x22, w          	MOVF	r0x1012,W
+00023f   00fe     movwf   0x7e             	MOVWF	STK01
+000240   0823     movf    0x23, w          	MOVF	r0x1011,W
+000241   00ff     movwf   0x7f             	MOVWF	STK00
+000242   3080     movlw   0x80             	MOVLW	0x80
+000243   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000244   2190     call    0x190            	CALL	__gptrget1
+000245   118a     bcf     0xa, 0x3         	PAGESEL	$
+000246   3910     andlw   0x10             	ANDLW	0x10
+000247   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000248   2a4c     goto    0x24c            	GOTO	_00068_DS_
+000249   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00024a   1303     bcf     0x3, 0x6         
+00024b   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00068_DS_
+00024c   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00024d   1303     bcf     0x3, 0x6         
+00024e   0825     movf    0x25, w          	MOVF	r0x1014,W
+00024f   00a2     movwf   0x22             	MOVWF	r0x1012
+000250   01a3     clrf    0x23             	CLRF	r0x1011
+000251   0e23     swapf   0x23, w          	SWAPF	r0x1011,W
+000252   39f0     andlw   0xf0             	ANDLW	0xf0
+000253   00a6     movwf   0x26             	MOVWF	r0x1015
+000254   0e22     swapf   0x22, w          	SWAPF	r0x1012,W
+000255   00a5     movwf   0x25             	MOVWF	r0x1014
+000256   390f     andlw   0xf              	ANDLW	0x0f
+000257   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+000258   06a5     xorwf   0x25, f          	XORWF	r0x1014,F
+000259   0825     movf    0x25, w          	MOVF	r0x1014,W
+00025a   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+00025b   0826     movf    0x26, w          	MOVF	r0x1015,W
+00025c   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	156; "main.c"	pattern[frame].layer2.led6 << 5 |
+00025d   3002     movlw   0x2              	MOVLW	0x02
+00025e   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+00025f   00a2     movwf   0x22             	MOVWF	r0x1012
+000260   01a3     clrf    0x23             	CLRF	r0x1011
+000261   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000262   0821     movf    0x21, w          	MOVF	r0x100F,W
+000263   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000264   01a5     clrf    0x25             	CLRF	r0x1014
+000265   0822     movf    0x22, w          	MOVF	r0x1012,W
+000266   00fe     movwf   0x7e             	MOVWF	STK01
+000267   0823     movf    0x23, w          	MOVF	r0x1011,W
+000268   00ff     movwf   0x7f             	MOVWF	STK00
+000269   3080     movlw   0x80             	MOVLW	0x80
+00026a   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00026b   2190     call    0x190            	CALL	__gptrget1
+00026c   118a     bcf     0xa, 0x3         	PAGESEL	$
+00026d   3920     andlw   0x20             	ANDLW	0x20
+00026e   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+00026f   2a73     goto    0x273            	GOTO	_00069_DS_
+000270   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000271   1303     bcf     0x3, 0x6         
+000272   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00069_DS_
+000273   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000274   1303     bcf     0x3, 0x6         
+000275   0825     movf    0x25, w          	MOVF	r0x1014,W
+000276   00a2     movwf   0x22             	MOVWF	r0x1012
+000277   01a3     clrf    0x23             	CLRF	r0x1011
+000278   0e23     swapf   0x23, w          	SWAPF	r0x1011,W
+000279   39f0     andlw   0xf0             	ANDLW	0xf0
+00027a   00a6     movwf   0x26             	MOVWF	r0x1015
+00027b   0e22     swapf   0x22, w          	SWAPF	r0x1012,W
+00027c   00a5     movwf   0x25             	MOVWF	r0x1014
+00027d   390f     andlw   0xf              	ANDLW	0x0f
+00027e   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+00027f   06a5     xorwf   0x25, f          	XORWF	r0x1014,F
+000280   1003     bcf     0x3, 0           	BCF	STATUS,0
+000281   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000282   0da6     rlf     0x26, f          	RLF	r0x1015,F
+000283   0825     movf    0x25, w          	MOVF	r0x1014,W
+000284   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+000285   0826     movf    0x26, w          	MOVF	r0x1015,W
+000286   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	157; "main.c"	pattern[frame].layer2.led7 << 6 |
+000287   3002     movlw   0x2              	MOVLW	0x02
+000288   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000289   00a2     movwf   0x22             	MOVWF	r0x1012
+00028a   01a3     clrf    0x23             	CLRF	r0x1011
+00028b   0da3     rlf     0x23, f          	RLF	r0x1011,F
+00028c   0821     movf    0x21, w          	MOVF	r0x100F,W
+00028d   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+00028e   01a5     clrf    0x25             	CLRF	r0x1014
+00028f   0822     movf    0x22, w          	MOVF	r0x1012,W
+000290   00fe     movwf   0x7e             	MOVWF	STK01
+000291   0823     movf    0x23, w          	MOVF	r0x1011,W
+000292   00ff     movwf   0x7f             	MOVWF	STK00
+000293   3080     movlw   0x80             	MOVLW	0x80
+000294   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000295   2190     call    0x190            	CALL	__gptrget1
+000296   118a     bcf     0xa, 0x3         	PAGESEL	$
+000297   3940     andlw   0x40             	ANDLW	0x40
+000298   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000299   2a9d     goto    0x29d            	GOTO	_00070_DS_
+00029a   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00029b   1303     bcf     0x3, 0x6         
+00029c   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00070_DS_
+00029d   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00029e   1303     bcf     0x3, 0x6         
+00029f   0825     movf    0x25, w          	MOVF	r0x1014,W
+0002a0   00a2     movwf   0x22             	MOVWF	r0x1012
+0002a1   01a3     clrf    0x23             	CLRF	r0x1011
+0002a2   0e23     swapf   0x23, w          	SWAPF	r0x1011,W
+0002a3   39f0     andlw   0xf0             	ANDLW	0xf0
+0002a4   00a6     movwf   0x26             	MOVWF	r0x1015
+0002a5   0e22     swapf   0x22, w          	SWAPF	r0x1012,W
+0002a6   00a5     movwf   0x25             	MOVWF	r0x1014
+0002a7   390f     andlw   0xf              	ANDLW	0x0f
+0002a8   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+0002a9   06a5     xorwf   0x25, f          	XORWF	r0x1014,F
+0002aa   1003     bcf     0x3, 0           	BCF	STATUS,0
+0002ab   0da5     rlf     0x25, f          	RLF	r0x1014,F
+0002ac   0da6     rlf     0x26, f          	RLF	r0x1015,F
+0002ad   1003     bcf     0x3, 0           	BCF	STATUS,0
+0002ae   0da5     rlf     0x25, f          	RLF	r0x1014,F
+0002af   0da6     rlf     0x26, f          	RLF	r0x1015,F
+0002b0   0825     movf    0x25, w          	MOVF	r0x1014,W
+0002b1   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+0002b2   0826     movf    0x26, w          	MOVF	r0x1015,W
+0002b3   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	158; "main.c"	pattern[frame].layer2.led8 << 7 |
+0002b4   3002     movlw   0x2              	MOVLW	0x02
+0002b5   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0002b6   00a2     movwf   0x22             	MOVWF	r0x1012
+0002b7   01a3     clrf    0x23             	CLRF	r0x1011
+0002b8   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0002b9   0821     movf    0x21, w          	MOVF	r0x100F,W
+0002ba   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0002bb   01a5     clrf    0x25             	CLRF	r0x1014
+0002bc   0822     movf    0x22, w          	MOVF	r0x1012,W
+0002bd   00fe     movwf   0x7e             	MOVWF	STK01
+0002be   0823     movf    0x23, w          	MOVF	r0x1011,W
+0002bf   00ff     movwf   0x7f             	MOVWF	STK00
+0002c0   3080     movlw   0x80             	MOVLW	0x80
+0002c1   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0002c2   2190     call    0x190            	CALL	__gptrget1
+0002c3   118a     bcf     0xa, 0x3         	PAGESEL	$
+0002c4   3980     andlw   0x80             	ANDLW	0x80
+0002c5   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0002c6   2aca     goto    0x2ca            	GOTO	_00071_DS_
+0002c7   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0002c8   1303     bcf     0x3, 0x6         
+0002c9   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00071_DS_
+0002ca   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0002cb   1303     bcf     0x3, 0x6         
+0002cc   0825     movf    0x25, w          	MOVF	r0x1014,W
+0002cd   00a2     movwf   0x22             	MOVWF	r0x1012
+0002ce   01a3     clrf    0x23             	CLRF	r0x1011
+0002cf   0c23     rrf     0x23, w          	RRF	r0x1011,W
+0002d0   0c22     rrf     0x22, w          	RRF	r0x1012,W
+0002d1   00a6     movwf   0x26             	MOVWF	r0x1015
+0002d2   01a5     clrf    0x25             	CLRF	r0x1014
+0002d3   0ca5     rrf     0x25, f          	RRF	r0x1014,F
+0002d4   0825     movf    0x25, w          	MOVF	r0x1014,W
+0002d5   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+0002d6   0826     movf    0x26, w          	MOVF	r0x1015,W
+0002d7   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	159; "main.c"	pattern[frame].layer2.led9 << 8;
+0002d8   3003     movlw   0x3              	MOVLW	0x03
+0002d9   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0002da   00a2     movwf   0x22             	MOVWF	r0x1012
+0002db   01a3     clrf    0x23             	CLRF	r0x1011
+0002dc   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0002dd   0821     movf    0x21, w          	MOVF	r0x100F,W
+0002de   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0002df   01a5     clrf    0x25             	CLRF	r0x1014
+0002e0   0822     movf    0x22, w          	MOVF	r0x1012,W
+0002e1   00fe     movwf   0x7e             	MOVWF	STK01
+0002e2   0823     movf    0x23, w          	MOVF	r0x1011,W
+0002e3   00ff     movwf   0x7f             	MOVWF	STK00
+0002e4   3080     movlw   0x80             	MOVLW	0x80
+0002e5   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0002e6   2190     call    0x190            	CALL	__gptrget1
+0002e7   118a     bcf     0xa, 0x3         	PAGESEL	$
+0002e8   3901     andlw   0x1              	ANDLW	0x01
+0002e9   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0002ea   2aee     goto    0x2ee            	GOTO	_00072_DS_
+0002eb   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0002ec   1303     bcf     0x3, 0x6         
+0002ed   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00072_DS_
+0002ee   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0002ef   1303     bcf     0x3, 0x6         
+0002f0   0825     movf    0x25, w          	MOVF	r0x1014,W
+0002f1   00a6     movwf   0x26             	MOVWF	r0x1015
+0002f2   00a2     movwf   0x22             	MOVWF	r0x1012
+0002f3   01a3     clrf    0x23             	CLRF	r0x1011
+                                           ;;107	MOVF	r0x1012,W
+0002f4   01a5     clrf    0x25             	CLRF	r0x1014
+0002f5   0824     movf    0x24, w          	MOVF	r0x1013,W
+0002f6   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+0002f7   1303     bcf     0x3, 0x6         
+0002f8   00cb     movwf   0x4b             	MOVWF	_p2
+0002f9   1283     bcf     0x3, 0x5         	BANKSEL	r0x1015
+0002fa   1303     bcf     0x3, 0x6         
+0002fb   0826     movf    0x26, w          	MOVF	r0x1015,W
+0002fc   0427     iorwf   0x27, w          	IORWF	r0x1016,W
+0002fd   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+0002fe   1303     bcf     0x3, 0x6         
+0002ff   00cc     movwf   0x4c             	MOVWF	(_p2 + 1)
+                                           ;	.line	162; "main.c"	p3 = pattern[frame].layer3.led1 | 
+000300   3004     movlw   0x4              	MOVLW	0x04
+000301   1283     bcf     0x3, 0x5         	BANKSEL	r0x1010
+000302   1303     bcf     0x3, 0x6         
+000303   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000304   00a2     movwf   0x22             	MOVWF	r0x1012
+000305   01a3     clrf    0x23             	CLRF	r0x1011
+000306   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000307   0821     movf    0x21, w          	MOVF	r0x100F,W
+000308   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000309   01a4     clrf    0x24             	CLRF	r0x1013
+00030a   0822     movf    0x22, w          	MOVF	r0x1012,W
+00030b   00fe     movwf   0x7e             	MOVWF	STK01
+00030c   0823     movf    0x23, w          	MOVF	r0x1011,W
+00030d   00ff     movwf   0x7f             	MOVWF	STK00
+00030e   3080     movlw   0x80             	MOVLW	0x80
+00030f   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000310   2190     call    0x190            	CALL	__gptrget1
+000311   118a     bcf     0xa, 0x3         	PAGESEL	$
+000312   3901     andlw   0x1              	ANDLW	0x01
+000313   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000314   2b18     goto    0x318            	GOTO	_00073_DS_
+000315   1283     bcf     0x3, 0x5         	BANKSEL	r0x1013
+000316   1303     bcf     0x3, 0x6         
+000317   0aa4     incf    0x24, f          	INCF	r0x1013,F
+                                           _00073_DS_
+                                           ;	.line	163; "main.c"	pattern[frame].layer3.led2 << 1 | 
+000318   3004     movlw   0x4              	MOVLW	0x04
+000319   1283     bcf     0x3, 0x5         	BANKSEL	r0x1010
+00031a   1303     bcf     0x3, 0x6         
+00031b   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+00031c   00a2     movwf   0x22             	MOVWF	r0x1012
+00031d   01a3     clrf    0x23             	CLRF	r0x1011
+00031e   0da3     rlf     0x23, f          	RLF	r0x1011,F
+00031f   0821     movf    0x21, w          	MOVF	r0x100F,W
+000320   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000321   01a5     clrf    0x25             	CLRF	r0x1014
+000322   0822     movf    0x22, w          	MOVF	r0x1012,W
+000323   00fe     movwf   0x7e             	MOVWF	STK01
+000324   0823     movf    0x23, w          	MOVF	r0x1011,W
+000325   00ff     movwf   0x7f             	MOVWF	STK00
+000326   3080     movlw   0x80             	MOVLW	0x80
+000327   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000328   2190     call    0x190            	CALL	__gptrget1
+000329   118a     bcf     0xa, 0x3         	PAGESEL	$
+00032a   3902     andlw   0x2              	ANDLW	0x02
+00032b   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+00032c   2b30     goto    0x330            	GOTO	_00074_DS_
+00032d   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00032e   1303     bcf     0x3, 0x6         
+00032f   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00074_DS_
+000330   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000331   1303     bcf     0x3, 0x6         
+000332   0825     movf    0x25, w          	MOVF	r0x1014,W
+000333   00a2     movwf   0x22             	MOVWF	r0x1012
+000334   01a3     clrf    0x23             	CLRF	r0x1011
+000335   1003     bcf     0x3, 0           	BCF	STATUS,0
+000336   0d22     rlf     0x22, w          	RLF	r0x1012,W
+000337   00a5     movwf   0x25             	MOVWF	r0x1014
+000338   0d23     rlf     0x23, w          	RLF	r0x1011,W
+000339   00a7     movwf   0x27             	MOVWF	r0x1016
+00033a   00a6     movwf   0x26             	MOVWF	r0x1015
+00033b   0824     movf    0x24, w          	MOVF	r0x1013,W
+00033c   00a2     movwf   0x22             	MOVWF	r0x1012
+00033d   0425     iorwf   0x25, w          	IORWF	r0x1014,W
+00033e   00a4     movwf   0x24             	MOVWF	r0x1013
+                                           ;;106	MOVF	r0x1015,W
+                                           ;;101	IORWF	r0x1011,W
+                                           ;	.line	164; "main.c"	pattern[frame].layer3.led3 << 2 |
+00033f   3004     movlw   0x4              	MOVLW	0x04
+000340   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000341   00a2     movwf   0x22             	MOVWF	r0x1012
+000342   01a3     clrf    0x23             	CLRF	r0x1011
+000343   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000344   0821     movf    0x21, w          	MOVF	r0x100F,W
+000345   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000346   01a5     clrf    0x25             	CLRF	r0x1014
+000347   0822     movf    0x22, w          	MOVF	r0x1012,W
+000348   00fe     movwf   0x7e             	MOVWF	STK01
+000349   0823     movf    0x23, w          	MOVF	r0x1011,W
+00034a   00ff     movwf   0x7f             	MOVWF	STK00
+00034b   3080     movlw   0x80             	MOVLW	0x80
+00034c   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00034d   2190     call    0x190            	CALL	__gptrget1
+00034e   118a     bcf     0xa, 0x3         	PAGESEL	$
+00034f   3904     andlw   0x4              	ANDLW	0x04
+000350   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000351   2b55     goto    0x355            	GOTO	_00075_DS_
+000352   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000353   1303     bcf     0x3, 0x6         
+000354   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00075_DS_
+000355   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000356   1303     bcf     0x3, 0x6         
+000357   0825     movf    0x25, w          	MOVF	r0x1014,W
+000358   00a2     movwf   0x22             	MOVWF	r0x1012
+000359   01a3     clrf    0x23             	CLRF	r0x1011
+00035a   1003     bcf     0x3, 0           	BCF	STATUS,0
+00035b   0d22     rlf     0x22, w          	RLF	r0x1012,W
+00035c   00a5     movwf   0x25             	MOVWF	r0x1014
+00035d   0d23     rlf     0x23, w          	RLF	r0x1011,W
+00035e   00a6     movwf   0x26             	MOVWF	r0x1015
+00035f   1003     bcf     0x3, 0           	BCF	STATUS,0
+000360   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000361   0da6     rlf     0x26, f          	RLF	r0x1015,F
+000362   0825     movf    0x25, w          	MOVF	r0x1014,W
+000363   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+000364   0826     movf    0x26, w          	MOVF	r0x1015,W
+000365   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	165; "main.c"	pattern[frame].layer3.led4 << 3 | 
+000366   3004     movlw   0x4              	MOVLW	0x04
+000367   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000368   00a2     movwf   0x22             	MOVWF	r0x1012
+000369   01a3     clrf    0x23             	CLRF	r0x1011
+00036a   0da3     rlf     0x23, f          	RLF	r0x1011,F
+00036b   0821     movf    0x21, w          	MOVF	r0x100F,W
+00036c   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+00036d   01a5     clrf    0x25             	CLRF	r0x1014
+00036e   0822     movf    0x22, w          	MOVF	r0x1012,W
+00036f   00fe     movwf   0x7e             	MOVWF	STK01
+000370   0823     movf    0x23, w          	MOVF	r0x1011,W
+000371   00ff     movwf   0x7f             	MOVWF	STK00
+000372   3080     movlw   0x80             	MOVLW	0x80
+000373   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000374   2190     call    0x190            	CALL	__gptrget1
+000375   118a     bcf     0xa, 0x3         	PAGESEL	$
+000376   3908     andlw   0x8              	ANDLW	0x08
+000377   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000378   2b7c     goto    0x37c            	GOTO	_00076_DS_
+000379   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00037a   1303     bcf     0x3, 0x6         
+00037b   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00076_DS_
+00037c   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+00037d   1303     bcf     0x3, 0x6         
+00037e   0825     movf    0x25, w          	MOVF	r0x1014,W
+00037f   00a2     movwf   0x22             	MOVWF	r0x1012
+000380   01a3     clrf    0x23             	CLRF	r0x1011
+000381   1003     bcf     0x3, 0           	BCF	STATUS,0
+000382   0d22     rlf     0x22, w          	RLF	r0x1012,W
+000383   00a5     movwf   0x25             	MOVWF	r0x1014
+000384   0d23     rlf     0x23, w          	RLF	r0x1011,W
+000385   00a6     movwf   0x26             	MOVWF	r0x1015
+000386   1003     bcf     0x3, 0           	BCF	STATUS,0
+000387   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000388   0da6     rlf     0x26, f          	RLF	r0x1015,F
+000389   1003     bcf     0x3, 0           	BCF	STATUS,0
+00038a   0da5     rlf     0x25, f          	RLF	r0x1014,F
+00038b   0da6     rlf     0x26, f          	RLF	r0x1015,F
+00038c   0825     movf    0x25, w          	MOVF	r0x1014,W
+00038d   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+00038e   0826     movf    0x26, w          	MOVF	r0x1015,W
+00038f   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	166; "main.c"	pattern[frame].layer3.led5 << 4 | 
+000390   3004     movlw   0x4              	MOVLW	0x04
+000391   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000392   00a2     movwf   0x22             	MOVWF	r0x1012
+000393   01a3     clrf    0x23             	CLRF	r0x1011
+000394   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000395   0821     movf    0x21, w          	MOVF	r0x100F,W
+000396   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000397   01a5     clrf    0x25             	CLRF	r0x1014
+000398   0822     movf    0x22, w          	MOVF	r0x1012,W
+000399   00fe     movwf   0x7e             	MOVWF	STK01
+00039a   0823     movf    0x23, w          	MOVF	r0x1011,W
+00039b   00ff     movwf   0x7f             	MOVWF	STK00
+00039c   3080     movlw   0x80             	MOVLW	0x80
+00039d   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00039e   2190     call    0x190            	CALL	__gptrget1
+00039f   118a     bcf     0xa, 0x3         	PAGESEL	$
+0003a0   3910     andlw   0x10             	ANDLW	0x10
+0003a1   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0003a2   2ba6     goto    0x3a6            	GOTO	_00077_DS_
+0003a3   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0003a4   1303     bcf     0x3, 0x6         
+0003a5   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00077_DS_
+0003a6   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0003a7   1303     bcf     0x3, 0x6         
+0003a8   0825     movf    0x25, w          	MOVF	r0x1014,W
+0003a9   00a2     movwf   0x22             	MOVWF	r0x1012
+0003aa   01a3     clrf    0x23             	CLRF	r0x1011
+0003ab   0e23     swapf   0x23, w          	SWAPF	r0x1011,W
+0003ac   39f0     andlw   0xf0             	ANDLW	0xf0
+0003ad   00a6     movwf   0x26             	MOVWF	r0x1015
+0003ae   0e22     swapf   0x22, w          	SWAPF	r0x1012,W
+0003af   00a5     movwf   0x25             	MOVWF	r0x1014
+0003b0   390f     andlw   0xf              	ANDLW	0x0f
+0003b1   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+0003b2   06a5     xorwf   0x25, f          	XORWF	r0x1014,F
+0003b3   0825     movf    0x25, w          	MOVF	r0x1014,W
+0003b4   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+0003b5   0826     movf    0x26, w          	MOVF	r0x1015,W
+0003b6   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	167; "main.c"	pattern[frame].layer3.led6 << 5 |
+0003b7   3004     movlw   0x4              	MOVLW	0x04
+0003b8   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0003b9   00a2     movwf   0x22             	MOVWF	r0x1012
+0003ba   01a3     clrf    0x23             	CLRF	r0x1011
+0003bb   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0003bc   0821     movf    0x21, w          	MOVF	r0x100F,W
+0003bd   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0003be   01a5     clrf    0x25             	CLRF	r0x1014
+0003bf   0822     movf    0x22, w          	MOVF	r0x1012,W
+0003c0   00fe     movwf   0x7e             	MOVWF	STK01
+0003c1   0823     movf    0x23, w          	MOVF	r0x1011,W
+0003c2   00ff     movwf   0x7f             	MOVWF	STK00
+0003c3   3080     movlw   0x80             	MOVLW	0x80
+0003c4   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0003c5   2190     call    0x190            	CALL	__gptrget1
+0003c6   118a     bcf     0xa, 0x3         	PAGESEL	$
+0003c7   3920     andlw   0x20             	ANDLW	0x20
+0003c8   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0003c9   2bcd     goto    0x3cd            	GOTO	_00078_DS_
+0003ca   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0003cb   1303     bcf     0x3, 0x6         
+0003cc   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00078_DS_
+0003cd   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0003ce   1303     bcf     0x3, 0x6         
+0003cf   0825     movf    0x25, w          	MOVF	r0x1014,W
+0003d0   00a2     movwf   0x22             	MOVWF	r0x1012
+0003d1   01a3     clrf    0x23             	CLRF	r0x1011
+0003d2   0e23     swapf   0x23, w          	SWAPF	r0x1011,W
+0003d3   39f0     andlw   0xf0             	ANDLW	0xf0
+0003d4   00a6     movwf   0x26             	MOVWF	r0x1015
+0003d5   0e22     swapf   0x22, w          	SWAPF	r0x1012,W
+0003d6   00a5     movwf   0x25             	MOVWF	r0x1014
+0003d7   390f     andlw   0xf              	ANDLW	0x0f
+0003d8   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+0003d9   06a5     xorwf   0x25, f          	XORWF	r0x1014,F
+0003da   1003     bcf     0x3, 0           	BCF	STATUS,0
+0003db   0da5     rlf     0x25, f          	RLF	r0x1014,F
+0003dc   0da6     rlf     0x26, f          	RLF	r0x1015,F
+0003dd   0825     movf    0x25, w          	MOVF	r0x1014,W
+0003de   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+0003df   0826     movf    0x26, w          	MOVF	r0x1015,W
+0003e0   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	168; "main.c"	pattern[frame].layer3.led7 << 6 | 
+0003e1   3004     movlw   0x4              	MOVLW	0x04
+0003e2   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+0003e3   00a2     movwf   0x22             	MOVWF	r0x1012
+0003e4   01a3     clrf    0x23             	CLRF	r0x1011
+0003e5   0da3     rlf     0x23, f          	RLF	r0x1011,F
+0003e6   0821     movf    0x21, w          	MOVF	r0x100F,W
+0003e7   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+0003e8   01a5     clrf    0x25             	CLRF	r0x1014
+0003e9   0822     movf    0x22, w          	MOVF	r0x1012,W
+0003ea   00fe     movwf   0x7e             	MOVWF	STK01
+0003eb   0823     movf    0x23, w          	MOVF	r0x1011,W
+0003ec   00ff     movwf   0x7f             	MOVWF	STK00
+0003ed   3080     movlw   0x80             	MOVLW	0x80
+0003ee   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+0003ef   2190     call    0x190            	CALL	__gptrget1
+0003f0   118a     bcf     0xa, 0x3         	PAGESEL	$
+0003f1   3940     andlw   0x40             	ANDLW	0x40
+0003f2   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+0003f3   2bf7     goto    0x3f7            	GOTO	_00079_DS_
+0003f4   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0003f5   1303     bcf     0x3, 0x6         
+0003f6   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00079_DS_
+0003f7   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+0003f8   1303     bcf     0x3, 0x6         
+0003f9   0825     movf    0x25, w          	MOVF	r0x1014,W
+0003fa   00a2     movwf   0x22             	MOVWF	r0x1012
+0003fb   01a3     clrf    0x23             	CLRF	r0x1011
+0003fc   0e23     swapf   0x23, w          	SWAPF	r0x1011,W
+0003fd   39f0     andlw   0xf0             	ANDLW	0xf0
+0003fe   00a6     movwf   0x26             	MOVWF	r0x1015
+0003ff   0e22     swapf   0x22, w          	SWAPF	r0x1012,W
+000400   00a5     movwf   0x25             	MOVWF	r0x1014
+000401   390f     andlw   0xf              	ANDLW	0x0f
+000402   04a6     iorwf   0x26, f          	IORWF	r0x1015,F
+000403   06a5     xorwf   0x25, f          	XORWF	r0x1014,F
+000404   1003     bcf     0x3, 0           	BCF	STATUS,0
+000405   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000406   0da6     rlf     0x26, f          	RLF	r0x1015,F
+000407   1003     bcf     0x3, 0           	BCF	STATUS,0
+000408   0da5     rlf     0x25, f          	RLF	r0x1014,F
+000409   0da6     rlf     0x26, f          	RLF	r0x1015,F
+00040a   0825     movf    0x25, w          	MOVF	r0x1014,W
+00040b   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+00040c   0826     movf    0x26, w          	MOVF	r0x1015,W
+00040d   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	169; "main.c"	pattern[frame].layer3.led8 << 7 | 
+00040e   3004     movlw   0x4              	MOVLW	0x04
+00040f   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000410   00a2     movwf   0x22             	MOVWF	r0x1012
+000411   01a3     clrf    0x23             	CLRF	r0x1011
+000412   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000413   0821     movf    0x21, w          	MOVF	r0x100F,W
+000414   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000415   01a5     clrf    0x25             	CLRF	r0x1014
+000416   0822     movf    0x22, w          	MOVF	r0x1012,W
+000417   00fe     movwf   0x7e             	MOVWF	STK01
+000418   0823     movf    0x23, w          	MOVF	r0x1011,W
+000419   00ff     movwf   0x7f             	MOVWF	STK00
+00041a   3080     movlw   0x80             	MOVLW	0x80
+00041b   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+00041c   2190     call    0x190            	CALL	__gptrget1
+00041d   118a     bcf     0xa, 0x3         	PAGESEL	$
+00041e   3980     andlw   0x80             	ANDLW	0x80
+00041f   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000420   2c24     goto    0x424            	GOTO	_00080_DS_
+000421   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000422   1303     bcf     0x3, 0x6         
+000423   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00080_DS_
+000424   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000425   1303     bcf     0x3, 0x6         
+000426   0825     movf    0x25, w          	MOVF	r0x1014,W
+000427   00a2     movwf   0x22             	MOVWF	r0x1012
+000428   01a3     clrf    0x23             	CLRF	r0x1011
+000429   0c23     rrf     0x23, w          	RRF	r0x1011,W
+00042a   0c22     rrf     0x22, w          	RRF	r0x1012,W
+00042b   00a6     movwf   0x26             	MOVWF	r0x1015
+00042c   01a5     clrf    0x25             	CLRF	r0x1014
+00042d   0ca5     rrf     0x25, f          	RRF	r0x1014,F
+00042e   0825     movf    0x25, w          	MOVF	r0x1014,W
+00042f   04a4     iorwf   0x24, f          	IORWF	r0x1013,F
+000430   0826     movf    0x26, w          	MOVF	r0x1015,W
+000431   04a7     iorwf   0x27, f          	IORWF	r0x1016,F
+                                           ;	.line	170; "main.c"	pattern[frame].layer3.led9 << 8;
+000432   3005     movlw   0x5              	MOVLW	0x05
+000433   0720     addwf   0x20, w          	ADDWF	r0x1010,W
+000434   00a2     movwf   0x22             	MOVWF	r0x1012
+000435   01a3     clrf    0x23             	CLRF	r0x1011
+000436   0da3     rlf     0x23, f          	RLF	r0x1011,F
+000437   0821     movf    0x21, w          	MOVF	r0x100F,W
+000438   07a3     addwf   0x23, f          	ADDWF	r0x1011,F
+000439   01a5     clrf    0x25             	CLRF	r0x1014
+00043a   0822     movf    0x22, w          	MOVF	r0x1012,W
+00043b   00fe     movwf   0x7e             	MOVWF	STK01
+00043c   0823     movf    0x23, w          	MOVF	r0x1011,W
+00043d   00ff     movwf   0x7f             	MOVWF	STK00
+00043e   3080     movlw   0x80             	MOVLW	0x80
+00043f   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget1
+000440   2190     call    0x190            	CALL	__gptrget1
+000441   118a     bcf     0xa, 0x3         	PAGESEL	$
+000442   3901     andlw   0x1              	ANDLW	0x01
+000443   1903     btfsc   0x3, 0x2         	BTFSC	STATUS,2
+000444   2c48     goto    0x448            	GOTO	_00081_DS_
+000445   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000446   1303     bcf     0x3, 0x6         
+000447   0aa5     incf    0x25, f          	INCF	r0x1014,F
+                                           _00081_DS_
+000448   1283     bcf     0x3, 0x5         	BANKSEL	r0x1014
+000449   1303     bcf     0x3, 0x6         
+00044a   0825     movf    0x25, w          	MOVF	r0x1014,W
+00044b   00a6     movwf   0x26             	MOVWF	r0x1015
+00044c   00a2     movwf   0x22             	MOVWF	r0x1012
+00044d   01a3     clrf    0x23             	CLRF	r0x1011
+                                           ;;99	MOVF	r0x1012,W
+00044e   01a5     clrf    0x25             	CLRF	r0x1014
+00044f   0824     movf    0x24, w          	MOVF	r0x1013,W
+000450   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+000451   1303     bcf     0x3, 0x6         
+000452   00cd     movwf   0x4d             	MOVWF	_p3
+000453   1283     bcf     0x3, 0x5         	BANKSEL	r0x1015
+000454   1303     bcf     0x3, 0x6         
+000455   0826     movf    0x26, w          	MOVF	r0x1015,W
+000456   0427     iorwf   0x27, w          	IORWF	r0x1016,W
+000457   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+000458   1303     bcf     0x3, 0x6         
+000459   00ce     movwf   0x4e             	MOVWF	(_p3 + 1)
+                                           ;	.line	172; "main.c"	delay = pattern[frame].delay;
+00045a   3006     movlw   0x6              	MOVLW	0x06
+00045b   1283     bcf     0x3, 0x5         	BANKSEL	r0x1010
+00045c   1303     bcf     0x3, 0x6         
+00045d   07a0     addwf   0x20, f          	ADDWF	r0x1010,F
+00045e   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00045f   0aa1     incf    0x21, f          	INCF	r0x100F,F
+000460   0820     movf    0x20, w          	MOVF	r0x1010,W
+000461   00fe     movwf   0x7e             	MOVWF	STK01
+000462   0821     movf    0x21, w          	MOVF	r0x100F,W
+000463   00ff     movwf   0x7f             	MOVWF	STK00
+000464   3080     movlw   0x80             	MOVLW	0x80
+000465   158a     bsf     0xa, 0x3         	PAGESEL	__gptrget2
+000466   21a3     call    0x1a3            	CALL	__gptrget2
+000467   118a     bcf     0xa, 0x3         	PAGESEL	$
+000468   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_delay_1_2
+000469   1303     bcf     0x3, 0x6         
+00046a   00b1     movwf   0x31             	MOVWF	(_timer_isr_delay_1_2 + 1)
+00046b   087f     movf    0x7f, w          	MOVF	STK00,W
+00046c   00b0     movwf   0x30             	MOVWF	_timer_isr_delay_1_2
+                                           ;	.line	173; "main.c"	cnt_t0 = 0;
+00046d   1283     bcf     0x3, 0x5         	BANKSEL	_timer_isr_cnt_t0_1_2
+00046e   1303     bcf     0x3, 0x6         
+00046f   01ac     clrf    0x2c             	CLRF	_timer_isr_cnt_t0_1_2
+000470   01ad     clrf    0x2d             	CLRF	(_timer_isr_cnt_t0_1_2 + 1)
+                                           _00108_DS_
+                                           ;	.line	175; "main.c"	TMR0IF = 0; // clear the flag
+000471   1283     bcf     0x3, 0x5         	BANKSEL	_INTCONbits
+000472   1303     bcf     0x3, 0x6         
+000473   110b     bcf     0xb, 0x2         	BCF	_INTCONbits,2
+                                           ;	.line	176; "main.c"	TMR0IE = 1; // reenable the interrupt
+000474   168b     bsf     0xb, 0x5         	BSF	_INTCONbits,5
+                                           ;	.line	177; "main.c"	TMR0 = 6; // reset the timer preset count
+000475   3006     movlw   0x6              	MOVLW	0x06
+000476   0081     movwf   0x1              	MOVWF	_TMR0
+000477   1283     bcf     0x3, 0x5         	BANKSEL	___sdcc_saved_fsr
+000478   1303     bcf     0x3, 0x6         
+000479   084f     movf    0x4f, w          	MOVF	___sdcc_saved_fsr,W
+00047a   1283     bcf     0x3, 0x5         	BANKSEL	FSR
+00047b   1303     bcf     0x3, 0x6         
+00047c   0084     movwf   0x4              	MOVWF	FSR
+00047d   0870     movf    0x70, w          	MOVF	PSAVE,W
+00047e   008a     movwf   0xa              	MOVWF	PCLATH
+00047f   0183     clrf    0x3              	CLRF	STATUS
+000480   0e71     swapf   0x71, w          	SWAPF	SSAVE,W
+000481   0083     movwf   0x3              	MOVWF	STATUS
+000482   0ef2     swapf   0x72, f          	SWAPF	WSAVE,F
+000483   0e72     swapf   0x72, w          	SWAPF	WSAVE,W
+                                           END_OF_INTERRUPT
+000484   0009     retfie                   	RETFIE	
+                                           
                                            ;--------------------------------------------------------
                                            ; code
                                            ;--------------------------------------------------------
@@ -183,35 +1983,767 @@ Address  Value    Disassembly              Source
                                            ;entry:  _main	;Function start
                                            ; 2 exit points
                                            ;has an exit
+                                           ;2 compiler assigned registers:
+                                           ;   r0x100D
+                                           ;   r0x100E
                                            ;; Starting pCode block
                                            _main	;Function start
                                            ; 2 exit points
-                                           ;	.line	15; "main.c"	INTCON = 0;	// no interrupts
-0000d3   1283     bcf     0x3, 0x5         	BANKSEL	_INTCON
-0000d4   1303     bcf     0x3, 0x6         
-0000d5   018b     clrf    0xb              	CLRF	_INTCON
-                                           ;	.line	16; "main.c"	TRISA = 0b00000000;
-0000d6   1683     bsf     0x3, 0x5         	BANKSEL	_TRISA
-0000d7   1303     bcf     0x3, 0x6         
-0000d8   0185     clrf    0x5              	CLRF	_TRISA
-                                           ;	.line	17; "main.c"	TRISB = 0b00000000;
-0000d9   0186     clrf    0x6              	CLRF	_TRISB
-                                           ;	.line	19; "main.c"	PORTA = 0xFF;
-0000da   30ff     movlw   0xff             	MOVLW	0xff
-0000db   1283     bcf     0x3, 0x5         	BANKSEL	_PORTA
-0000dc   1303     bcf     0x3, 0x6         
-0000dd   0085     movwf   0x5              	MOVWF	_PORTA
-                                           ;	.line	20; "main.c"	PORTB = 0xFF;
-0000de   30ff     movlw   0xff             	MOVLW	0xff
-0000df   0086     movwf   0x6              	MOVWF	_PORTB
-0000e0   0008     return                   	RETURN	
+                                           ;	.line	184; "main.c"	IRCF0 = 1; // 8 MHz internal clock
+000485   1683     bsf     0x3, 0x5         	BANKSEL	_OSCCONbits
+000486   1303     bcf     0x3, 0x6         
+000487   160f     bsf     0xf, 0x4         	BSF	_OSCCONbits,4
+                                           ;	.line	185; "main.c"	IRCF1 = 1;
+000488   168f     bsf     0xf, 0x5         	BSF	_OSCCONbits,5
+                                           ;	.line	186; "main.c"	IRCF2 = 1;
+000489   170f     bsf     0xf, 0x6         	BSF	_OSCCONbits,6
+                                           ;	.line	189; "main.c"	T0CS = 0; // bit 5 TMR0 Clock Source Select bit...0 = Internal Clock (CLKO) 1 = Transition on T0CKI pin
+00048a   1281     bcf     0x1, 0x5         	BCF	_OPTION_REGbits,5
+                                           ;	.line	190; "main.c"	T0SE = 0; // bit 4 TMR0 Source Edge Select bit 0 = low/high 1 = high/low
+00048b   1201     bcf     0x1, 0x4         	BCF	_OPTION_REGbits,4
+                                           ;	.line	191; "main.c"	PSA = 0; // bit 3  Prescaler Assignment bit...0 = Prescaler is assigned to the Timer0
+00048c   1181     bcf     0x1, 0x3         	BCF	_OPTION_REGbits,3
+                                           ;	.line	192; "main.c"	PS2 = 0; // bits 2-0  PS2:PS0: Prescaler Rate Select bits
+00048d   1101     bcf     0x1, 0x2         	BCF	_OPTION_REGbits,2
+                                           ;	.line	193; "main.c"	PS1 = 1;
+00048e   1481     bsf     0x1, 0x1         	BSF	_OPTION_REGbits,1
+                                           ;	.line	194; "main.c"	PS0 = 0;
+00048f   1001     bcf     0x1, 0           	BCF	_OPTION_REGbits,0
+                                           ;	.line	195; "main.c"	TMR0 = 6; // preset for timer register
+000490   3006     movlw   0x6              	MOVLW	0x06
+000491   1283     bcf     0x3, 0x5         	BANKSEL	_TMR0
+000492   1303     bcf     0x3, 0x6         
+000493   0081     movwf   0x1              	MOVWF	_TMR0
+                                           ;	.line	198; "main.c"	INTCON = 0; // clear the interrupt control register
+000494   018b     clrf    0xb              	CLRF	_INTCON
+                                           ;	.line	199; "main.c"	TMR0IE = 1; // bit5 TMR0 Overflow Interrupt Enable bit...1 = Enables the TMR0 interrupt
+000495   168b     bsf     0xb, 0x5         	BSF	_INTCONbits,5
+                                           ;	.line	200; "main.c"	TMR0IF = 0; // bit2 clear timer 0 interrupt flag
+000496   110b     bcf     0xb, 0x2         	BCF	_INTCONbits,2
+                                           ;	.line	201; "main.c"	GIE = 1; // bit7 global interrupt enable
+000497   178b     bsf     0xb, 0x7         	BSF	_INTCONbits,7
+                                           ;	.line	203; "main.c"	ANSEL = 0; // digital io
+000498   1683     bsf     0x3, 0x5         	BANKSEL	_ANSEL
+000499   1303     bcf     0x3, 0x6         
+00049a   019b     clrf    0x1b             	CLRF	_ANSEL
+                                           ;	.line	204; "main.c"	TRISA = 0b00000000; // all output
+00049b   0185     clrf    0x5              	CLRF	_TRISA
+                                           ;	.line	205; "main.c"	TRISB = 0b00000000; // all output
+00049c   0186     clrf    0x6              	CLRF	_TRISB
+                                           ;	.line	207; "main.c"	LED1 = 0;
+00049d   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00049e   1303     bcf     0x3, 0x6         
+00049f   1086     bcf     0x6, 0x1         	BCF	_PORTBbits,1
+                                           ;	.line	208; "main.c"	LED2 = 0;
+0004a0   1006     bcf     0x6, 0           	BCF	_PORTBbits,0
+                                           ;	.line	209; "main.c"	LED4 = 0;
+0004a1   1106     bcf     0x6, 0x2         	BCF	_PORTBbits,2
+                                           ;	.line	210; "main.c"	LED5 = 0;
+0004a2   1386     bcf     0x6, 0x7         	BCF	_PORTBbits,7
+                                           ;	.line	211; "main.c"	LED6 = 0;
+0004a3   1306     bcf     0x6, 0x6         	BCF	_PORTBbits,6
+                                           ;	.line	212; "main.c"	LED7 = 0;
+0004a4   1186     bcf     0x6, 0x3         	BCF	_PORTBbits,3
+                                           ;	.line	213; "main.c"	LED8 = 0;
+0004a5   1206     bcf     0x6, 0x4         	BCF	_PORTBbits,4
+                                           ;	.line	214; "main.c"	LED9 = 0;
+0004a6   1286     bcf     0x6, 0x5         	BCF	_PORTBbits,5
+                                           ;	.line	215; "main.c"	LED3 = 0;
+0004a7   1305     bcf     0x5, 0x6         	BCF	_PORTAbits,6
+                                           ;	.line	216; "main.c"	LAYER1 = 0;
+0004a8   1105     bcf     0x5, 0x2         	BCF	_PORTAbits,2
+                                           ;	.line	217; "main.c"	LAYER2 = 0;
+0004a9   1185     bcf     0x5, 0x3         	BCF	_PORTAbits,3
+                                           ;	.line	218; "main.c"	LAYER3 = 0;
+0004aa   1205     bcf     0x5, 0x4         	BCF	_PORTAbits,4
+                                           _00123_DS_
+                                           ;	.line	235; "main.c"	LAYER1 = 1;
+0004ab   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+0004ac   1303     bcf     0x3, 0x6         
+0004ad   1505     bsf     0x5, 0x2         	BSF	_PORTAbits,2
+                                           ;	.line	236; "main.c"	LAYER2 = 0;
+0004ae   1185     bcf     0x5, 0x3         	BCF	_PORTAbits,3
+                                           ;	.line	237; "main.c"	LAYER3 = 0;
+0004af   1205     bcf     0x5, 0x4         	BCF	_PORTAbits,4
+                                           ;	.line	238; "main.c"	LED1 = BIT_IS_SET(p1,0);
+0004b0   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+0004b1   1303     bcf     0x3, 0x6         
+0004b2   0849     movf    0x49, w          	MOVF	_p1,W
+0004b3   3901     andlw   0x1              	ANDLW	0x01
+0004b4   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0004b5   1303     bcf     0x3, 0x6         
+0004b6   00aa     movwf   0x2a             	MOVWF	r0x100D
+0004b7   00ab     movwf   0x2b             	MOVWF	r0x100E
+0004b8   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0004b9   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0004ba   2cbe     goto    0x4be            	GOTO	_00001_DS_
+0004bb   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0004bc   1303     bcf     0x3, 0x6         
+0004bd   1086     bcf     0x6, 0x1         	BCF	_PORTBbits,1
+                                           _00001_DS_
+0004be   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0004bf   2cc3     goto    0x4c3            	GOTO	_00002_DS_
+0004c0   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0004c1   1303     bcf     0x3, 0x6         
+0004c2   1486     bsf     0x6, 0x1         	BSF	_PORTBbits,1
+                                           _00002_DS_
+                                           ;	.line	239; "main.c"	LED2 = BIT_IS_SET(p1,1);
+0004c3   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+0004c4   1303     bcf     0x3, 0x6         
+0004c5   0849     movf    0x49, w          	MOVF	_p1,W
+0004c6   3902     andlw   0x2              	ANDLW	0x02
+0004c7   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0004c8   3001     movlw   0x1              	MOVLW	0x01
+0004c9   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0004ca   1303     bcf     0x3, 0x6         
+0004cb   00aa     movwf   0x2a             	MOVWF	r0x100D
+0004cc   00ab     movwf   0x2b             	MOVWF	r0x100E
+0004cd   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0004ce   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0004cf   2cd3     goto    0x4d3            	GOTO	_00003_DS_
+0004d0   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0004d1   1303     bcf     0x3, 0x6         
+0004d2   1006     bcf     0x6, 0           	BCF	_PORTBbits,0
+                                           _00003_DS_
+0004d3   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0004d4   2cd8     goto    0x4d8            	GOTO	_00004_DS_
+0004d5   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0004d6   1303     bcf     0x3, 0x6         
+0004d7   1406     bsf     0x6, 0           	BSF	_PORTBbits,0
+                                           _00004_DS_
+                                           ;	.line	240; "main.c"	LED3 = BIT_IS_SET(p1,2);
+0004d8   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+0004d9   1303     bcf     0x3, 0x6         
+0004da   0849     movf    0x49, w          	MOVF	_p1,W
+0004db   3904     andlw   0x4              	ANDLW	0x04
+0004dc   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0004dd   3001     movlw   0x1              	MOVLW	0x01
+0004de   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0004df   1303     bcf     0x3, 0x6         
+0004e0   00aa     movwf   0x2a             	MOVWF	r0x100D
+0004e1   00ab     movwf   0x2b             	MOVWF	r0x100E
+0004e2   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0004e3   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0004e4   2ce8     goto    0x4e8            	GOTO	_00005_DS_
+0004e5   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+0004e6   1303     bcf     0x3, 0x6         
+0004e7   1305     bcf     0x5, 0x6         	BCF	_PORTAbits,6
+                                           _00005_DS_
+0004e8   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0004e9   2ced     goto    0x4ed            	GOTO	_00006_DS_
+0004ea   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+0004eb   1303     bcf     0x3, 0x6         
+0004ec   1705     bsf     0x5, 0x6         	BSF	_PORTAbits,6
+                                           _00006_DS_
+                                           ;	.line	241; "main.c"	LED4 = BIT_IS_SET(p1,3);
+0004ed   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+0004ee   1303     bcf     0x3, 0x6         
+0004ef   0849     movf    0x49, w          	MOVF	_p1,W
+0004f0   3908     andlw   0x8              	ANDLW	0x08
+0004f1   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0004f2   3001     movlw   0x1              	MOVLW	0x01
+0004f3   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0004f4   1303     bcf     0x3, 0x6         
+0004f5   00aa     movwf   0x2a             	MOVWF	r0x100D
+0004f6   00ab     movwf   0x2b             	MOVWF	r0x100E
+0004f7   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0004f8   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0004f9   2cfd     goto    0x4fd            	GOTO	_00007_DS_
+0004fa   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0004fb   1303     bcf     0x3, 0x6         
+0004fc   1106     bcf     0x6, 0x2         	BCF	_PORTBbits,2
+                                           _00007_DS_
+0004fd   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0004fe   2d02     goto    0x502            	GOTO	_00008_DS_
+0004ff   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000500   1303     bcf     0x3, 0x6         
+000501   1506     bsf     0x6, 0x2         	BSF	_PORTBbits,2
+                                           _00008_DS_
+                                           ;	.line	242; "main.c"	LED5 = BIT_IS_SET(p1,4);
+000502   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+000503   1303     bcf     0x3, 0x6         
+000504   0849     movf    0x49, w          	MOVF	_p1,W
+000505   3910     andlw   0x10             	ANDLW	0x10
+000506   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000507   3001     movlw   0x1              	MOVLW	0x01
+000508   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000509   1303     bcf     0x3, 0x6         
+00050a   00aa     movwf   0x2a             	MOVWF	r0x100D
+00050b   00ab     movwf   0x2b             	MOVWF	r0x100E
+00050c   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00050d   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00050e   2d12     goto    0x512            	GOTO	_00009_DS_
+00050f   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000510   1303     bcf     0x3, 0x6         
+000511   1386     bcf     0x6, 0x7         	BCF	_PORTBbits,7
+                                           _00009_DS_
+000512   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000513   2d17     goto    0x517            	GOTO	_00010_DS_
+000514   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000515   1303     bcf     0x3, 0x6         
+000516   1786     bsf     0x6, 0x7         	BSF	_PORTBbits,7
+                                           _00010_DS_
+                                           ;	.line	243; "main.c"	LED6 = BIT_IS_SET(p1,5);
+000517   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+000518   1303     bcf     0x3, 0x6         
+000519   0849     movf    0x49, w          	MOVF	_p1,W
+00051a   3920     andlw   0x20             	ANDLW	0x20
+00051b   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+00051c   3001     movlw   0x1              	MOVLW	0x01
+00051d   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+00051e   1303     bcf     0x3, 0x6         
+00051f   00aa     movwf   0x2a             	MOVWF	r0x100D
+000520   00ab     movwf   0x2b             	MOVWF	r0x100E
+000521   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+000522   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000523   2d27     goto    0x527            	GOTO	_00011_DS_
+000524   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000525   1303     bcf     0x3, 0x6         
+000526   1306     bcf     0x6, 0x6         	BCF	_PORTBbits,6
+                                           _00011_DS_
+000527   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000528   2d2c     goto    0x52c            	GOTO	_00012_DS_
+000529   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00052a   1303     bcf     0x3, 0x6         
+00052b   1706     bsf     0x6, 0x6         	BSF	_PORTBbits,6
+                                           _00012_DS_
+                                           ;	.line	244; "main.c"	LED7 = BIT_IS_SET(p1,6);
+00052c   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+00052d   1303     bcf     0x3, 0x6         
+00052e   0849     movf    0x49, w          	MOVF	_p1,W
+00052f   3940     andlw   0x40             	ANDLW	0x40
+000530   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000531   3001     movlw   0x1              	MOVLW	0x01
+000532   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000533   1303     bcf     0x3, 0x6         
+000534   00aa     movwf   0x2a             	MOVWF	r0x100D
+000535   00ab     movwf   0x2b             	MOVWF	r0x100E
+000536   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+000537   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000538   2d3c     goto    0x53c            	GOTO	_00013_DS_
+000539   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00053a   1303     bcf     0x3, 0x6         
+00053b   1186     bcf     0x6, 0x3         	BCF	_PORTBbits,3
+                                           _00013_DS_
+00053c   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+00053d   2d41     goto    0x541            	GOTO	_00014_DS_
+00053e   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00053f   1303     bcf     0x3, 0x6         
+000540   1586     bsf     0x6, 0x3         	BSF	_PORTBbits,3
+                                           _00014_DS_
+                                           ;	.line	245; "main.c"	LED8 = BIT_IS_SET(p1,7);
+000541   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+000542   1303     bcf     0x3, 0x6         
+000543   0849     movf    0x49, w          	MOVF	_p1,W
+000544   3980     andlw   0x80             	ANDLW	0x80
+000545   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000546   3001     movlw   0x1              	MOVLW	0x01
+000547   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000548   1303     bcf     0x3, 0x6         
+000549   00aa     movwf   0x2a             	MOVWF	r0x100D
+00054a   00ab     movwf   0x2b             	MOVWF	r0x100E
+00054b   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00054c   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00054d   2d51     goto    0x551            	GOTO	_00015_DS_
+00054e   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00054f   1303     bcf     0x3, 0x6         
+000550   1206     bcf     0x6, 0x4         	BCF	_PORTBbits,4
+                                           _00015_DS_
+000551   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000552   2d56     goto    0x556            	GOTO	_00016_DS_
+000553   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000554   1303     bcf     0x3, 0x6         
+000555   1606     bsf     0x6, 0x4         	BSF	_PORTBbits,4
+                                           _00016_DS_
+                                           ;	.line	246; "main.c"	LED9 = BIT_IS_SET(p1,8);
+000556   1283     bcf     0x3, 0x5         	BANKSEL	_p1
+000557   1303     bcf     0x3, 0x6         
+000558   084a     movf    0x4a, w          	MOVF	(_p1 + 1),W
+000559   3901     andlw   0x1              	ANDLW	0x01
+00055a   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+00055b   1303     bcf     0x3, 0x6         
+00055c   00aa     movwf   0x2a             	MOVWF	r0x100D
+00055d   00ab     movwf   0x2b             	MOVWF	r0x100E
+00055e   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00055f   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000560   2d64     goto    0x564            	GOTO	_00017_DS_
+000561   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000562   1303     bcf     0x3, 0x6         
+000563   1286     bcf     0x6, 0x5         	BCF	_PORTBbits,5
+                                           _00017_DS_
+000564   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000565   2d69     goto    0x569            	GOTO	_00018_DS_
+000566   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000567   1303     bcf     0x3, 0x6         
+000568   1686     bsf     0x6, 0x5         	BSF	_PORTBbits,5
+                                           _00018_DS_
+                                           ;	.line	248; "main.c"	LAYER1 = 0;
+000569   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+00056a   1303     bcf     0x3, 0x6         
+00056b   1105     bcf     0x5, 0x2         	BCF	_PORTAbits,2
+                                           ;	.line	249; "main.c"	LAYER2 = 1;
+00056c   1585     bsf     0x5, 0x3         	BSF	_PORTAbits,3
+                                           ;	.line	250; "main.c"	LAYER3 = 0;
+00056d   1205     bcf     0x5, 0x4         	BCF	_PORTAbits,4
+                                           ;	.line	251; "main.c"	LED1 = BIT_IS_SET(p2,0);
+00056e   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+00056f   1303     bcf     0x3, 0x6         
+000570   084b     movf    0x4b, w          	MOVF	_p2,W
+000571   3901     andlw   0x1              	ANDLW	0x01
+000572   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000573   1303     bcf     0x3, 0x6         
+000574   00aa     movwf   0x2a             	MOVWF	r0x100D
+000575   00ab     movwf   0x2b             	MOVWF	r0x100E
+000576   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+000577   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000578   2d7c     goto    0x57c            	GOTO	_00019_DS_
+000579   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00057a   1303     bcf     0x3, 0x6         
+00057b   1086     bcf     0x6, 0x1         	BCF	_PORTBbits,1
+                                           _00019_DS_
+00057c   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+00057d   2d81     goto    0x581            	GOTO	_00020_DS_
+00057e   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00057f   1303     bcf     0x3, 0x6         
+000580   1486     bsf     0x6, 0x1         	BSF	_PORTBbits,1
+                                           _00020_DS_
+                                           ;	.line	252; "main.c"	LED2 = BIT_IS_SET(p2,1);
+000581   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+000582   1303     bcf     0x3, 0x6         
+000583   084b     movf    0x4b, w          	MOVF	_p2,W
+000584   3902     andlw   0x2              	ANDLW	0x02
+000585   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000586   3001     movlw   0x1              	MOVLW	0x01
+000587   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000588   1303     bcf     0x3, 0x6         
+000589   00aa     movwf   0x2a             	MOVWF	r0x100D
+00058a   00ab     movwf   0x2b             	MOVWF	r0x100E
+00058b   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00058c   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00058d   2d91     goto    0x591            	GOTO	_00021_DS_
+00058e   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00058f   1303     bcf     0x3, 0x6         
+000590   1006     bcf     0x6, 0           	BCF	_PORTBbits,0
+                                           _00021_DS_
+000591   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000592   2d96     goto    0x596            	GOTO	_00022_DS_
+000593   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000594   1303     bcf     0x3, 0x6         
+000595   1406     bsf     0x6, 0           	BSF	_PORTBbits,0
+                                           _00022_DS_
+                                           ;	.line	253; "main.c"	LED3 = BIT_IS_SET(p2,2);
+000596   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+000597   1303     bcf     0x3, 0x6         
+000598   084b     movf    0x4b, w          	MOVF	_p2,W
+000599   3904     andlw   0x4              	ANDLW	0x04
+00059a   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+00059b   3001     movlw   0x1              	MOVLW	0x01
+00059c   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+00059d   1303     bcf     0x3, 0x6         
+00059e   00aa     movwf   0x2a             	MOVWF	r0x100D
+00059f   00ab     movwf   0x2b             	MOVWF	r0x100E
+0005a0   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0005a1   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0005a2   2da6     goto    0x5a6            	GOTO	_00023_DS_
+0005a3   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+0005a4   1303     bcf     0x3, 0x6         
+0005a5   1305     bcf     0x5, 0x6         	BCF	_PORTAbits,6
+                                           _00023_DS_
+0005a6   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0005a7   2dab     goto    0x5ab            	GOTO	_00024_DS_
+0005a8   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+0005a9   1303     bcf     0x3, 0x6         
+0005aa   1705     bsf     0x5, 0x6         	BSF	_PORTAbits,6
+                                           _00024_DS_
+                                           ;	.line	254; "main.c"	LED4 = BIT_IS_SET(p2,3);
+0005ab   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+0005ac   1303     bcf     0x3, 0x6         
+0005ad   084b     movf    0x4b, w          	MOVF	_p2,W
+0005ae   3908     andlw   0x8              	ANDLW	0x08
+0005af   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0005b0   3001     movlw   0x1              	MOVLW	0x01
+0005b1   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0005b2   1303     bcf     0x3, 0x6         
+0005b3   00aa     movwf   0x2a             	MOVWF	r0x100D
+0005b4   00ab     movwf   0x2b             	MOVWF	r0x100E
+0005b5   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0005b6   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0005b7   2dbb     goto    0x5bb            	GOTO	_00025_DS_
+0005b8   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005b9   1303     bcf     0x3, 0x6         
+0005ba   1106     bcf     0x6, 0x2         	BCF	_PORTBbits,2
+                                           _00025_DS_
+0005bb   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0005bc   2dc0     goto    0x5c0            	GOTO	_00026_DS_
+0005bd   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005be   1303     bcf     0x3, 0x6         
+0005bf   1506     bsf     0x6, 0x2         	BSF	_PORTBbits,2
+                                           _00026_DS_
+                                           ;	.line	255; "main.c"	LED5 = BIT_IS_SET(p2,4);
+0005c0   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+0005c1   1303     bcf     0x3, 0x6         
+0005c2   084b     movf    0x4b, w          	MOVF	_p2,W
+0005c3   3910     andlw   0x10             	ANDLW	0x10
+0005c4   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0005c5   3001     movlw   0x1              	MOVLW	0x01
+0005c6   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0005c7   1303     bcf     0x3, 0x6         
+0005c8   00aa     movwf   0x2a             	MOVWF	r0x100D
+0005c9   00ab     movwf   0x2b             	MOVWF	r0x100E
+0005ca   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0005cb   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0005cc   2dd0     goto    0x5d0            	GOTO	_00027_DS_
+0005cd   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005ce   1303     bcf     0x3, 0x6         
+0005cf   1386     bcf     0x6, 0x7         	BCF	_PORTBbits,7
+                                           _00027_DS_
+0005d0   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0005d1   2dd5     goto    0x5d5            	GOTO	_00028_DS_
+0005d2   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005d3   1303     bcf     0x3, 0x6         
+0005d4   1786     bsf     0x6, 0x7         	BSF	_PORTBbits,7
+                                           _00028_DS_
+                                           ;	.line	256; "main.c"	LED6 = BIT_IS_SET(p2,5);
+0005d5   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+0005d6   1303     bcf     0x3, 0x6         
+0005d7   084b     movf    0x4b, w          	MOVF	_p2,W
+0005d8   3920     andlw   0x20             	ANDLW	0x20
+0005d9   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0005da   3001     movlw   0x1              	MOVLW	0x01
+0005db   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0005dc   1303     bcf     0x3, 0x6         
+0005dd   00aa     movwf   0x2a             	MOVWF	r0x100D
+0005de   00ab     movwf   0x2b             	MOVWF	r0x100E
+0005df   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0005e0   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0005e1   2de5     goto    0x5e5            	GOTO	_00029_DS_
+0005e2   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005e3   1303     bcf     0x3, 0x6         
+0005e4   1306     bcf     0x6, 0x6         	BCF	_PORTBbits,6
+                                           _00029_DS_
+0005e5   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0005e6   2dea     goto    0x5ea            	GOTO	_00030_DS_
+0005e7   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005e8   1303     bcf     0x3, 0x6         
+0005e9   1706     bsf     0x6, 0x6         	BSF	_PORTBbits,6
+                                           _00030_DS_
+                                           ;	.line	257; "main.c"	LED7 = BIT_IS_SET(p2,6);
+0005ea   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+0005eb   1303     bcf     0x3, 0x6         
+0005ec   084b     movf    0x4b, w          	MOVF	_p2,W
+0005ed   3940     andlw   0x40             	ANDLW	0x40
+0005ee   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0005ef   3001     movlw   0x1              	MOVLW	0x01
+0005f0   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0005f1   1303     bcf     0x3, 0x6         
+0005f2   00aa     movwf   0x2a             	MOVWF	r0x100D
+0005f3   00ab     movwf   0x2b             	MOVWF	r0x100E
+0005f4   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0005f5   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0005f6   2dfa     goto    0x5fa            	GOTO	_00031_DS_
+0005f7   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005f8   1303     bcf     0x3, 0x6         
+0005f9   1186     bcf     0x6, 0x3         	BCF	_PORTBbits,3
+                                           _00031_DS_
+0005fa   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0005fb   2dff     goto    0x5ff            	GOTO	_00032_DS_
+0005fc   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0005fd   1303     bcf     0x3, 0x6         
+0005fe   1586     bsf     0x6, 0x3         	BSF	_PORTBbits,3
+                                           _00032_DS_
+                                           ;	.line	258; "main.c"	LED8 = BIT_IS_SET(p2,7);
+0005ff   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+000600   1303     bcf     0x3, 0x6         
+000601   084b     movf    0x4b, w          	MOVF	_p2,W
+000602   3980     andlw   0x80             	ANDLW	0x80
+000603   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000604   3001     movlw   0x1              	MOVLW	0x01
+000605   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000606   1303     bcf     0x3, 0x6         
+000607   00aa     movwf   0x2a             	MOVWF	r0x100D
+000608   00ab     movwf   0x2b             	MOVWF	r0x100E
+000609   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00060a   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00060b   2e0f     goto    0x60f            	GOTO	_00033_DS_
+00060c   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00060d   1303     bcf     0x3, 0x6         
+00060e   1206     bcf     0x6, 0x4         	BCF	_PORTBbits,4
+                                           _00033_DS_
+00060f   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000610   2e14     goto    0x614            	GOTO	_00034_DS_
+000611   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000612   1303     bcf     0x3, 0x6         
+000613   1606     bsf     0x6, 0x4         	BSF	_PORTBbits,4
+                                           _00034_DS_
+                                           ;	.line	259; "main.c"	LED9 = BIT_IS_SET(p2,8);
+000614   1283     bcf     0x3, 0x5         	BANKSEL	_p2
+000615   1303     bcf     0x3, 0x6         
+000616   084c     movf    0x4c, w          	MOVF	(_p2 + 1),W
+000617   3901     andlw   0x1              	ANDLW	0x01
+000618   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000619   1303     bcf     0x3, 0x6         
+00061a   00aa     movwf   0x2a             	MOVWF	r0x100D
+00061b   00ab     movwf   0x2b             	MOVWF	r0x100E
+00061c   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00061d   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00061e   2e22     goto    0x622            	GOTO	_00035_DS_
+00061f   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000620   1303     bcf     0x3, 0x6         
+000621   1286     bcf     0x6, 0x5         	BCF	_PORTBbits,5
+                                           _00035_DS_
+000622   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000623   2e27     goto    0x627            	GOTO	_00036_DS_
+000624   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000625   1303     bcf     0x3, 0x6         
+000626   1686     bsf     0x6, 0x5         	BSF	_PORTBbits,5
+                                           _00036_DS_
+                                           ;	.line	261; "main.c"	LAYER1 = 0;
+000627   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+000628   1303     bcf     0x3, 0x6         
+000629   1105     bcf     0x5, 0x2         	BCF	_PORTAbits,2
+                                           ;	.line	262; "main.c"	LAYER2 = 0;
+00062a   1185     bcf     0x5, 0x3         	BCF	_PORTAbits,3
+                                           ;	.line	263; "main.c"	LAYER3 = 1;
+00062b   1605     bsf     0x5, 0x4         	BSF	_PORTAbits,4
+                                           ;	.line	264; "main.c"	LED1 = BIT_IS_SET(p3,0);
+00062c   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+00062d   1303     bcf     0x3, 0x6         
+00062e   084d     movf    0x4d, w          	MOVF	_p3,W
+00062f   3901     andlw   0x1              	ANDLW	0x01
+000630   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000631   1303     bcf     0x3, 0x6         
+000632   00aa     movwf   0x2a             	MOVWF	r0x100D
+000633   00ab     movwf   0x2b             	MOVWF	r0x100E
+000634   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+000635   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000636   2e3a     goto    0x63a            	GOTO	_00037_DS_
+000637   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000638   1303     bcf     0x3, 0x6         
+000639   1086     bcf     0x6, 0x1         	BCF	_PORTBbits,1
+                                           _00037_DS_
+00063a   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+00063b   2e3f     goto    0x63f            	GOTO	_00038_DS_
+00063c   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00063d   1303     bcf     0x3, 0x6         
+00063e   1486     bsf     0x6, 0x1         	BSF	_PORTBbits,1
+                                           _00038_DS_
+                                           ;	.line	265; "main.c"	LED2 = BIT_IS_SET(p3,1);
+00063f   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+000640   1303     bcf     0x3, 0x6         
+000641   084d     movf    0x4d, w          	MOVF	_p3,W
+000642   3902     andlw   0x2              	ANDLW	0x02
+000643   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000644   3001     movlw   0x1              	MOVLW	0x01
+000645   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000646   1303     bcf     0x3, 0x6         
+000647   00aa     movwf   0x2a             	MOVWF	r0x100D
+000648   00ab     movwf   0x2b             	MOVWF	r0x100E
+000649   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00064a   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00064b   2e4f     goto    0x64f            	GOTO	_00039_DS_
+00064c   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00064d   1303     bcf     0x3, 0x6         
+00064e   1006     bcf     0x6, 0           	BCF	_PORTBbits,0
+                                           _00039_DS_
+00064f   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000650   2e54     goto    0x654            	GOTO	_00040_DS_
+000651   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000652   1303     bcf     0x3, 0x6         
+000653   1406     bsf     0x6, 0           	BSF	_PORTBbits,0
+                                           _00040_DS_
+                                           ;	.line	266; "main.c"	LED3 = BIT_IS_SET(p3,2);
+000654   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+000655   1303     bcf     0x3, 0x6         
+000656   084d     movf    0x4d, w          	MOVF	_p3,W
+000657   3904     andlw   0x4              	ANDLW	0x04
+000658   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000659   3001     movlw   0x1              	MOVLW	0x01
+00065a   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+00065b   1303     bcf     0x3, 0x6         
+00065c   00aa     movwf   0x2a             	MOVWF	r0x100D
+00065d   00ab     movwf   0x2b             	MOVWF	r0x100E
+00065e   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00065f   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000660   2e64     goto    0x664            	GOTO	_00041_DS_
+000661   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+000662   1303     bcf     0x3, 0x6         
+000663   1305     bcf     0x5, 0x6         	BCF	_PORTAbits,6
+                                           _00041_DS_
+000664   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+000665   2e69     goto    0x669            	GOTO	_00042_DS_
+000666   1283     bcf     0x3, 0x5         	BANKSEL	_PORTAbits
+000667   1303     bcf     0x3, 0x6         
+000668   1705     bsf     0x5, 0x6         	BSF	_PORTAbits,6
+                                           _00042_DS_
+                                           ;	.line	267; "main.c"	LED4 = BIT_IS_SET(p3,3);
+000669   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+00066a   1303     bcf     0x3, 0x6         
+00066b   084d     movf    0x4d, w          	MOVF	_p3,W
+00066c   3908     andlw   0x8              	ANDLW	0x08
+00066d   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+00066e   3001     movlw   0x1              	MOVLW	0x01
+00066f   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000670   1303     bcf     0x3, 0x6         
+000671   00aa     movwf   0x2a             	MOVWF	r0x100D
+000672   00ab     movwf   0x2b             	MOVWF	r0x100E
+000673   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+000674   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+000675   2e79     goto    0x679            	GOTO	_00043_DS_
+000676   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000677   1303     bcf     0x3, 0x6         
+000678   1106     bcf     0x6, 0x2         	BCF	_PORTBbits,2
+                                           _00043_DS_
+000679   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+00067a   2e7e     goto    0x67e            	GOTO	_00044_DS_
+00067b   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00067c   1303     bcf     0x3, 0x6         
+00067d   1506     bsf     0x6, 0x2         	BSF	_PORTBbits,2
+                                           _00044_DS_
+                                           ;	.line	268; "main.c"	LED5 = BIT_IS_SET(p3,4);
+00067e   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+00067f   1303     bcf     0x3, 0x6         
+000680   084d     movf    0x4d, w          	MOVF	_p3,W
+000681   3910     andlw   0x10             	ANDLW	0x10
+000682   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000683   3001     movlw   0x1              	MOVLW	0x01
+000684   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+000685   1303     bcf     0x3, 0x6         
+000686   00aa     movwf   0x2a             	MOVWF	r0x100D
+000687   00ab     movwf   0x2b             	MOVWF	r0x100E
+000688   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+000689   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00068a   2e8e     goto    0x68e            	GOTO	_00045_DS_
+00068b   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+00068c   1303     bcf     0x3, 0x6         
+00068d   1386     bcf     0x6, 0x7         	BCF	_PORTBbits,7
+                                           _00045_DS_
+00068e   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+00068f   2e93     goto    0x693            	GOTO	_00046_DS_
+000690   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+000691   1303     bcf     0x3, 0x6         
+000692   1786     bsf     0x6, 0x7         	BSF	_PORTBbits,7
+                                           _00046_DS_
+                                           ;	.line	269; "main.c"	LED6 = BIT_IS_SET(p3,5);
+000693   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+000694   1303     bcf     0x3, 0x6         
+000695   084d     movf    0x4d, w          	MOVF	_p3,W
+000696   3920     andlw   0x20             	ANDLW	0x20
+000697   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+000698   3001     movlw   0x1              	MOVLW	0x01
+000699   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+00069a   1303     bcf     0x3, 0x6         
+00069b   00aa     movwf   0x2a             	MOVWF	r0x100D
+00069c   00ab     movwf   0x2b             	MOVWF	r0x100E
+00069d   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+00069e   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+00069f   2ea3     goto    0x6a3            	GOTO	_00047_DS_
+0006a0   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006a1   1303     bcf     0x3, 0x6         
+0006a2   1306     bcf     0x6, 0x6         	BCF	_PORTBbits,6
+                                           _00047_DS_
+0006a3   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0006a4   2ea8     goto    0x6a8            	GOTO	_00048_DS_
+0006a5   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006a6   1303     bcf     0x3, 0x6         
+0006a7   1706     bsf     0x6, 0x6         	BSF	_PORTBbits,6
+                                           _00048_DS_
+                                           ;	.line	270; "main.c"	LED7 = BIT_IS_SET(p3,6);
+0006a8   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+0006a9   1303     bcf     0x3, 0x6         
+0006aa   084d     movf    0x4d, w          	MOVF	_p3,W
+0006ab   3940     andlw   0x40             	ANDLW	0x40
+0006ac   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0006ad   3001     movlw   0x1              	MOVLW	0x01
+0006ae   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0006af   1303     bcf     0x3, 0x6         
+0006b0   00aa     movwf   0x2a             	MOVWF	r0x100D
+0006b1   00ab     movwf   0x2b             	MOVWF	r0x100E
+0006b2   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0006b3   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0006b4   2eb8     goto    0x6b8            	GOTO	_00049_DS_
+0006b5   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006b6   1303     bcf     0x3, 0x6         
+0006b7   1186     bcf     0x6, 0x3         	BCF	_PORTBbits,3
+                                           _00049_DS_
+0006b8   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0006b9   2ebd     goto    0x6bd            	GOTO	_00050_DS_
+0006ba   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006bb   1303     bcf     0x3, 0x6         
+0006bc   1586     bsf     0x6, 0x3         	BSF	_PORTBbits,3
+                                           _00050_DS_
+                                           ;	.line	271; "main.c"	LED8 = BIT_IS_SET(p3,7);
+0006bd   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+0006be   1303     bcf     0x3, 0x6         
+0006bf   084d     movf    0x4d, w          	MOVF	_p3,W
+0006c0   3980     andlw   0x80             	ANDLW	0x80
+0006c1   1d03     btfss   0x3, 0x2         	BTFSS	STATUS,2
+0006c2   3001     movlw   0x1              	MOVLW	0x01
+0006c3   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0006c4   1303     bcf     0x3, 0x6         
+0006c5   00aa     movwf   0x2a             	MOVWF	r0x100D
+0006c6   00ab     movwf   0x2b             	MOVWF	r0x100E
+0006c7   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0006c8   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0006c9   2ecd     goto    0x6cd            	GOTO	_00051_DS_
+0006ca   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006cb   1303     bcf     0x3, 0x6         
+0006cc   1206     bcf     0x6, 0x4         	BCF	_PORTBbits,4
+                                           _00051_DS_
+0006cd   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0006ce   2ed2     goto    0x6d2            	GOTO	_00052_DS_
+0006cf   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006d0   1303     bcf     0x3, 0x6         
+0006d1   1606     bsf     0x6, 0x4         	BSF	_PORTBbits,4
+                                           _00052_DS_
+                                           ;	.line	272; "main.c"	LED9 = BIT_IS_SET(p3,8);
+0006d2   1283     bcf     0x3, 0x5         	BANKSEL	_p3
+0006d3   1303     bcf     0x3, 0x6         
+0006d4   084e     movf    0x4e, w          	MOVF	(_p3 + 1),W
+0006d5   3901     andlw   0x1              	ANDLW	0x01
+0006d6   1283     bcf     0x3, 0x5         	BANKSEL	r0x100D
+0006d7   1303     bcf     0x3, 0x6         
+0006d8   00aa     movwf   0x2a             	MOVWF	r0x100D
+0006d9   00ab     movwf   0x2b             	MOVWF	r0x100E
+0006da   0c2b     rrf     0x2b, w          	RRF	r0x100E,W
+0006db   1803     btfsc   0x3, 0           	BTFSC	STATUS,0
+0006dc   2ee0     goto    0x6e0            	GOTO	_00053_DS_
+0006dd   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006de   1303     bcf     0x3, 0x6         
+0006df   1286     bcf     0x6, 0x5         	BCF	_PORTBbits,5
+                                           _00053_DS_
+0006e0   1c03     btfss   0x3, 0           	BTFSS	STATUS,0
+0006e1   2ee5     goto    0x6e5            	GOTO	_00054_DS_
+0006e2   1283     bcf     0x3, 0x5         	BANKSEL	_PORTBbits
+0006e3   1303     bcf     0x3, 0x6         
+0006e4   1686     bsf     0x6, 0x5         	BSF	_PORTBbits,5
+                                           _00054_DS_
+0006e5   2cab     goto    0x4ab            	GOTO	_00123_DS_
+0006e6   0008     return                   	RETURN	
                                            ; exit point of _main
                                            
                                            
                                            ;	code size estimation:
-                                           ;	    8+    3 =    11 instructions (   28 byte)
+                                           ;	 1305+  260 =  1565 instructions ( 3650 byte)
                                            
                                            	end
+                                                   LIST
+                                           
+                                           ;==========================================================================
+                                           ;  MPASM PIC16F877 processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2013 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+                                           
+                                                   NOLIST
+                                                   LIST
+                                           
+                                           ;==========================================================================
+                                           ;  MPASM PIC16F877 processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2013 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+                                           
+                                                   NOLIST
                                                    LIST
                                            
                                            ;==========================================================================
